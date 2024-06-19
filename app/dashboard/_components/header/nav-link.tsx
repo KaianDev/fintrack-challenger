@@ -7,17 +7,13 @@ interface NavLinkProps {
   label: string
 }
 
-const NavLink = ({ href, label }: NavLinkProps) => {
+export const NavLink = ({ href, label }: NavLinkProps) => {
   return (
     <Link
       href={href}
-      className={
-        "text-sm text-muted w-fit hover:font-bold hover:text-primary"
-      }
+      className={"w-fit text-sm text-muted hover:font-bold hover:text-primary"}
     >
       {label}
     </Link>
   )
 }
-
-export default NavLink

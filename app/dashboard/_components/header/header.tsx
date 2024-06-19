@@ -2,8 +2,8 @@ import Image from "next/image"
 import Link from "next/link"
 
 // Components
-import NavLink from "./nav-link"
-import UserCard from "./user-card"
+import { NavLink } from "."
+import { UserCard } from "."
 
 export const Header = () => {
   return (

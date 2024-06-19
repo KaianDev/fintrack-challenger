@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-const UserCard = () => {
+export const UserCard = () => {
   return (
     <div className="flex h-10 items-center justify-center gap-2 rounded-lg border px-4">
       <Avatar className="size-5">
@@ -11,5 +11,3 @@ const UserCard = () => {
     </div>
   )
 }
-
-export default UserCard
