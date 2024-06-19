@@ -1,8 +1,13 @@
 import type { Metadata } from "next"
-import { Nunito } from "next/font/google"
+import { Nunito as FontSans } from "next/font/google"
 import "./globals.css"
+import { cn } from "@/lib/utils"
 
-const fontSans = Nunito({ subsets: ["latin"], weight: ["400", "600", "700"] })
+const fontSans = FontSans({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-sans",
+})
 
 export const metadata: Metadata = {
   title: "FinTrack",
@@ -14,8 +19,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={fontSans.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning className="dark">
+      <body
+        className={cn(
+          "bg-background min-h-screen font-sans antialiased",
+          fontSans.variable,
+        )}
+      >
+        {children}
+      </body>
     </html>
   )
 }
