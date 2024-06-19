@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { Nunito as FontSans } from "next/font/google"
 import "./globals.css"
+
+// Utilities
 import { cn } from "@/lib/utils"
 
 const fontSans = FontSans({

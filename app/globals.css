@@ -23,7 +23,7 @@
     --destructive: 14 96% 29%;
     --destructive-foreground: 14 96% 89%;
     --ring: 80 53% 30%;
-    --radius: 0.3rem;
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -35,7 +35,7 @@
     --popover-foreground: 0 0% 100%;
     --card: 0 0% 9.02%;
     --card-foreground: 0 0% 100%;
-    --border: 240 3.83% 46.08%;
+    --border: 240 3.7% 15.88%;
     --input: 240 3.7% 15.88%;
     --primary: 102 58.56% 43.53%;
     --primary-foreground: 0 0% 100%;
@@ -55,5 +55,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .title {
+    @apply text-xl font-bold text-white;
   }
 }
