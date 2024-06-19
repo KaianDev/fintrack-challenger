@@ -4,7 +4,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <Header />
-      {children}
+      <div className="mx-auto w-full max-w-[1378px] p-8">{children}</div>
     </>
   )
 }
