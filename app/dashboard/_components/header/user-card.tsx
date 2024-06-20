@@ -7,7 +7,7 @@ export const UserCard = () => {
         <AvatarFallback>CN</AvatarFallback>
         <AvatarImage src="/avatar.png" sizes="20" />
       </Avatar>
-      <p className="text-white">Alicia Koch</p>
+      <p className="hidden text-white md:block">Alicia Koch</p>
     </div>
   )
 }

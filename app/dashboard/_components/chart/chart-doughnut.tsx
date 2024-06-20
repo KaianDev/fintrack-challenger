@@ -69,11 +69,11 @@ export const ChartDoughnut = () => {
   const investment = getTotalForTypePercent(TransactionType.INVESTMENT)
 
   return (
-    <section className="flex max-h-[218px] max-w-lg items-center gap-12 rounded-lg bg-card px-12 py-6">
+    <section className="flex flex-col items-center justify-center gap-12 rounded-lg bg-card px-12 py-6 sm:max-h-[218px] sm:flex-row">
       <div className="max-h-[170px] max-w-[170px]">
         <Doughnut data={data} options={options} />
       </div>
-      <div className="flex-1 space-y-3">
+      <div className="w-full space-y-3 sm:max-w-52 lg:flex-1">
         <div className="flex items-center justify-between">
           <TransactionTitle
             icon={TrendingUp}

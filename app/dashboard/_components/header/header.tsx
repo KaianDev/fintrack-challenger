@@ -19,7 +19,7 @@ export const Header = () => {
               className="h-[29px] w-auto"
               alt="Logo FinTrack"
             />
-            <strong className="title">FinTrack</strong>
+            <strong className="title hidden md:block">FinTrack</strong>
           </Link>
           <NavLink href="/dashboard" label="Dashboard" />
           <NavLink href="/analise" label="Análise" />

@@ -14,7 +14,7 @@ import {
 import { Bar } from "react-chartjs-2"
 
 // Utilities
-import { transactionData } from "@/data/transaction"
+import { TransactionDataType, transactionData } from "@/data/transaction"
 import { Colors } from "@/data/enum"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
@@ -23,7 +23,6 @@ const labels = transactionData.map((t) => t.date.getDate())
 
 const data = {
   labels,
-  yLabels: [{}],
   datasets: [
     {
       data: transactionData.map((t) => t.amount),
@@ -38,29 +37,28 @@ const data = {
   ],
 } as ChartData<"bar">
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  scales: {
-    y: {
-      display: false,
-      grid: {
-        display: false,
-      },
-    },
-    x: {
-      grid: {
-        display: false,
-      },
-    },
-  },
-} as ChartOptions<"bar">
-
 export const ChartBar = () => {
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        display: false,
+        grid: {
+          display: false,
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+  } as ChartOptions<"bar">
+
   return (
     <div className="space-y-6 rounded-lg bg-card p-6">
       <div>
@@ -70,8 +68,12 @@ export const ChartBar = () => {
           <p className="text-sm text-muted">Ao longo do mês</p>
         </div>
       </div>
-      <div className="h-full max-h-[236px]">
-        <Bar options={options} data={data} className="bg-card" />
+      <div className="h-full lg:max-h-[236px]">
+        <Bar
+          options={options}
+          data={data}
+          className="mx-auto h-full w-full max-w-full bg-card sm:max-w-sm md:max-w-md"
+        />
       </div>
     </div>
   )
