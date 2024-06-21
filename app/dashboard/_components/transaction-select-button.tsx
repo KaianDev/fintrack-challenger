@@ -1,18 +1,21 @@
 import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react"
 
+// Components
+import { FormLabel } from "@/components/ui/form"
+
 // Utilities
 import { Colors, TransactionType } from "@/data/enum"
 
 interface TransactionSelectButtonProps {
   type: TransactionType
-  selected: boolean
+  value: string
 }
 
 export const TransactionSelectButton = ({
   type,
-  selected,
+  value,
 }: TransactionSelectButtonProps) => {
-  const getIcon = () => {
+  const getValues = () => {
     if (type === TransactionType.EXPENSE)
       return {
         icon: TrendingDown,
@@ -32,16 +35,18 @@ export const TransactionSelectButton = ({
     }
   }
 
-  const { icon: Icon, label, color } = getIcon()
+  const { icon: Icon, label, color } = getValues()
 
   return (
-    <button
-      type="button"
-      className="flex h-10 items-center justify-center gap-2 rounded-xl border text-sm text-white"
-      style={{ borderColor: selected ? color : undefined }}
+    <FormLabel
+      className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 text-sm text-white"
+      style={{
+        color,
+        borderColor: value === type ? color : "",
+      }}
     >
-      <Icon style={{ color }} />
+      <Icon />
       {label}
-    </button>
+    </FormLabel>
   )
 }
