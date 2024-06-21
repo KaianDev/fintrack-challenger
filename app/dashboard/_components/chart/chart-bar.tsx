@@ -14,18 +14,18 @@ import {
 import { Bar } from "react-chartjs-2"
 
 // Utilities
-import { TransactionDataType, transactionData } from "@/data/transaction"
+import { transactionData } from "@/data/transaction"
 import { Colors } from "@/data/enum"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-const labels = transactionData.map((t) => t.date.getDate())
+const labels = transactionData.slice(0, 10).map((t) => t.date.getDate())
 
 const data = {
   labels,
   datasets: [
     {
-      data: transactionData.map((t) => t.amount),
+      data: transactionData.slice(0, 10).map((t) => t.amount),
       backgroundColor: transactionData.map((t) => {
         if (t.type === "EXPENSE") return Colors.RED
         if (t.type === "REVENUE") return Colors.GREEN
@@ -60,7 +60,7 @@ export const ChartBar = () => {
   } as ChartOptions<"bar">
 
   return (
-    <div className="flex-1 space-y-6 rounded-lg bg-card p-6">
+    <div className="flex-1 space-y-6 rounded-lg border bg-card p-6">
       <div>
         <p className="mb-6 font-bold">Movimentações</p>
         <div className="space-y-1">

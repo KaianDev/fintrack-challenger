@@ -1,25 +1,30 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
 import dayjs from "dayjs"
 import "dayjs/locale/pt-br"
 import localeData from "dayjs/plugin/localeData"
+import { ColumnDef } from "@tanstack/react-table"
 
 dayjs.extend(localeData)
 dayjs.locale("pt-br")
 
+// Components
+import { TransactionBadge } from "../transaction-badge"
+import { TransactionSheet } from "../transaction-sheet"
+
+// Utilities
 import { TransactionDataType } from "@/data/transaction"
 import { TransactionType } from "@/data/enum"
-import { TransactionBadge } from "../transaction-badge"
 import { formatMoney } from "@/helpers/format-money"
-import { Button } from "@/components/ui/button"
-import { ExternalLink } from "lucide-react"
-import { TransactionSheet } from "../transaction-sheet"
 
 export const columns: ColumnDef<TransactionDataType>[] = [
   {
     accessorKey: "title",
     header: "Título",
+    cell({ row }) {
+      const title = row.getValue("title") as string
+      return <p className="truncate">{title}</p>
+    },
   },
   {
     accessorKey: "type",
@@ -36,7 +41,7 @@ export const columns: ColumnDef<TransactionDataType>[] = [
       const date = row.getValue("date") as Date
       const formattedDate = dayjs(date).format("DD [de] MMMM YYYY")
 
-      return <p className="text-sm text-muted">{formattedDate}</p>
+      return <p className="truncate text-sm text-muted">{formattedDate}</p>
     },
   },
   {
@@ -52,8 +57,9 @@ export const columns: ColumnDef<TransactionDataType>[] = [
   {
     accessorKey: "action",
     header: "",
-    cell() {
-      return <TransactionSheet />
+    cell({ row }) {
+      const data = row.original
+      return <TransactionSheet data={data} />
     },
   },
 ]

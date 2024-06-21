@@ -48,6 +48,7 @@ const data = {
 } as ChartData<"doughnut">
 
 const options = {
+  responsive: true,
   plugins: {
     legend: {
       display: false,
@@ -69,8 +70,8 @@ export const ChartDoughnut = () => {
   const investment = getTotalForTypePercent(TransactionType.INVESTMENT)
 
   return (
-    <section className="flex flex-col items-center justify-center gap-12 rounded-lg bg-card px-12 py-6 sm:max-h-[218px] sm:flex-row">
-      <div className="max-h-[170px] max-w-[170px]">
+    <section className="flex items-center justify-center gap-6 rounded-lg border bg-card px-12 py-6 sm:flex-row sm:gap-12 xl:max-h-[218px]">
+      <div className="hidden sm:block sm:max-h-[170px] sm:max-w-[170px]">
         <Doughnut data={data} options={options} />
       </div>
       <div className="w-full space-y-3 sm:max-w-52 lg:flex-1">

@@ -33,9 +33,9 @@ export const DataTable = <TData, TValue>({
   })
 
   return (
-    <div className="rounded-md">
+    <div className="rounded-md border">
       <p className="title p-6">Transações</p>
-      <Table className="rounded-lg overflow-hidden">
+      <Table className="overflow-hidden rounded-lg">
         <TableHeader className="bg-white/[0.02]">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="p-10">
