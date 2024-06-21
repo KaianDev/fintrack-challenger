@@ -12,13 +12,15 @@ import {
 import { TransactionCard } from "./_components/transaction-card"
 import { TransactionTitle } from "./_components/transaction-title"
 import { ChartBar, ChartDoughnut } from "./_components/chart"
+import { DataTable, columns } from "./_components/table"
+import { transactionData } from "@/data/transaction"
 
 const Dashboard = () => {
   return (
     <main className="flex flex-col gap-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <h1 className="title">Dashboard</h1>
-        <div className="flex gap-2 justify-between ">
+        <div className="flex justify-between gap-2">
           <Button
             variant="outline"
             className="flex items-center justify-center gap-2"
@@ -61,7 +63,9 @@ const Dashboard = () => {
       </div>
 
       <section className="flex flex-col-reverse gap-6 lg:flex-row">
-        <section className="flex-1 rounded-lg bg-card">...</section>
+        <section className="flex-1 rounded-lg bg-card">
+          <DataTable data={transactionData} columns={columns} />
+        </section>
 
         <div className="flex w-full flex-col space-y-6 lg:max-w-lg">
           <ChartDoughnut />

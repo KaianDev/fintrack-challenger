@@ -60,7 +60,7 @@ export const ChartBar = () => {
   } as ChartOptions<"bar">
 
   return (
-    <div className="space-y-6 rounded-lg bg-card p-6">
+    <div className="flex-1 space-y-6 rounded-lg bg-card p-6">
       <div>
         <p className="mb-6 font-bold">Movimentações</p>
         <div className="space-y-1">
