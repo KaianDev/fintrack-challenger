@@ -24,7 +24,7 @@ export const TransactionSelectButton = ({
         label: "Gasto",
         color: Colors.RED,
       }
-    if (type === TransactionType.REVENUE)
+    if (type === TransactionType.EARNING)
       return {
         icon: TrendingUp,
         label: "Ganho",

@@ -5,20 +5,18 @@ import { ExternalLink } from "lucide-react"
 // Components
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { TransactionFormData } from "../../schema"
-import { TransactionDataType } from "@/data/transaction"
 import { TransactionForm } from "."
 import { useState } from "react"
+import { Transaction } from "../../types"
 
 interface TransactionSheetProps {
-  data: TransactionDataType
+  data: Transaction
 }
 
 export const TransactionSheet = ({ data }: TransactionSheetProps) => {

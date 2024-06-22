@@ -12,11 +12,11 @@ dayjs.locale("pt-br")
 import { TransactionBadge, TransactionSheet } from "../transaction"
 
 // Utilities
-import { TransactionDataType } from "@/data/transaction"
 import { TransactionType } from "@/data/enum"
 import { formatMoney } from "@/helpers/format-money"
+import { Transaction } from "../../types"
 
-export const columns: ColumnDef<TransactionDataType>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "title",
     header: "Título",

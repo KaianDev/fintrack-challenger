@@ -30,10 +30,10 @@ import { DeleteTransactionAlertDialog, TransactionSelectButton } from "."
 // Utilities
 import { cn } from "@/lib/utils"
 import { TransactionFormData, transactionFormSchema } from "../../schema"
-import { TransactionDataType } from "@/data/transaction"
+import { Transaction } from "../../types"
 
 interface TransactionFormProps {
-  data?: TransactionDataType
+  data?: Transaction
   confirmLabel: string
   formType: "update" | "create"
   onSubmit: (data: TransactionFormData) => void
@@ -156,13 +156,13 @@ export const TransactionForm = ({
                   <FormItem>
                     <FormControl>
                       <RadioGroupItem
-                        value={TransactionType.REVENUE}
+                        value={TransactionType.EARNING}
                         className="sr-only"
                       />
                     </FormControl>
                     <TransactionSelectButton
                       value={field.value}
-                      type={TransactionType.REVENUE}
+                      type={TransactionType.EARNING}
                     />
                   </FormItem>
                   <FormItem>

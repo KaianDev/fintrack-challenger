@@ -28,7 +28,7 @@ const data = {
       data: transactionData.slice(0, 10).map((t) => t.amount),
       backgroundColor: transactionData.map((t) => {
         if (t.type === "EXPENSE") return Colors.RED
-        if (t.type === "REVENUE") return Colors.GREEN
+        if (t.type === "EARNING") return Colors.GREEN
         if (t.type === "INVESTMENT") return Colors.BLUE
       }),
       borderRadius: 8,

@@ -35,7 +35,7 @@ const data = {
     {
       label: "",
       data: [
-        getDataValue(TransactionType.REVENUE),
+        getDataValue(TransactionType.EARNING),
         getDataValue(TransactionType.EXPENSE),
         getDataValue(TransactionType.INVESTMENT),
       ],
@@ -65,7 +65,7 @@ export const ChartDoughnut = () => {
     return `${totalForType}%`
   }
 
-  const revenue = getTotalForTypePercent(TransactionType.REVENUE)
+  const EARNING = getTotalForTypePercent(TransactionType.EARNING)
   const expense = getTotalForTypePercent(TransactionType.EXPENSE)
   const investment = getTotalForTypePercent(TransactionType.INVESTMENT)
 
@@ -81,7 +81,7 @@ export const ChartDoughnut = () => {
             label="Ganhos"
             color="text-primary"
           />
-          <p className="text-sm font-bold">{revenue}</p>
+          <p className="text-sm font-bold">{EARNING}</p>
         </div>
         <div className="flex items-center justify-between gap-2">
           <TransactionTitle

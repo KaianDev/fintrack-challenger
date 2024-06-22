@@ -4,18 +4,20 @@ import { Calendar } from "lucide-react"
 // Components
 import { ChartBar, ChartDoughnut } from "./_components/chart"
 import { DataTable, columns } from "./_components/table"
-import { transactionData } from "@/data/transaction"
 import {
   TransactionBalance,
   TransactionDialog,
 } from "./_components/transaction"
+import { getTransactions } from "./actions/transactions"
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const transactionData = await getTransactions()
+
   return (
     <main className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <h1 className="title">Dashboard</h1>
-        <div className="flex justify-between sm:justify-end gap-2">
+        <div className="flex justify-between gap-2 sm:justify-end">
           <Button
             variant="outline"
             className="flex items-center justify-center gap-2"
