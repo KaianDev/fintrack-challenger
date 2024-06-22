@@ -14,6 +14,7 @@ import { TransactionTitle } from "./_components/transaction-title"
 import { ChartBar, ChartDoughnut } from "./_components/chart"
 import { DataTable, columns } from "./_components/table"
 import { transactionData } from "@/data/transaction"
+import { TransactionDialog } from "./_components/trasancition-dialog"
 
 const Dashboard = () => {
   return (
@@ -28,10 +29,7 @@ const Dashboard = () => {
             <Calendar size={16} />
             Março
           </Button>
-          <Button className="flex items-center justify-center gap-2">
-            Nova transação
-            <Plus size={16} />
-          </Button>
+          <TransactionDialog />
         </div>
       </div>
 
@@ -67,7 +65,7 @@ const Dashboard = () => {
           <DataTable data={transactionData} columns={columns} />
         </section>
 
-        <div className="flex flex-col lg:flex-row w-full gap-6 xl:max-w-lg xl:flex-col">
+        <div className="flex w-full flex-col gap-6 lg:flex-row xl:max-w-lg xl:flex-col">
           <ChartDoughnut />
           <ChartBar />
         </div>

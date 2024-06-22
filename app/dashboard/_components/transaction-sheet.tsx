@@ -44,8 +44,9 @@ export const TransactionSheet = ({ data }: TransactionSheetProps) => {
             Transação
           </SheetTitle>
         </SheetHeader>
-        <div className="flex-1">
+        <div className="flex-1 px-6 pb-6">
           <TransactionForm
+            confirmLabel="Salvar"
             data={data}
             onSubmit={onSubmit}
             onClose={handleClose}

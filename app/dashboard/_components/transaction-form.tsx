@@ -33,12 +33,14 @@ import { TransactionDataType } from "@/data/transaction"
 
 interface TransactionFormProps {
   data?: TransactionDataType
+  confirmLabel: string
   onSubmit: (data: TransactionFormData) => void
   onClose: () => void
 }
 
 export const TransactionForm = ({
   data,
+  confirmLabel,
   onSubmit,
   onClose,
 }: TransactionFormProps) => {
@@ -55,7 +57,7 @@ export const TransactionForm = ({
     <Form {...form}>
       <form
         onSubmit={handleSubmitForm}
-        className="flex h-full flex-col justify-between px-6 pb-6"
+        className="flex h-full flex-col justify-between gap-5"
       >
         <div className="space-y-6">
           <FormField
@@ -190,14 +192,11 @@ export const TransactionForm = ({
         </div>
 
         <div className="mt-auto grid w-full grid-cols-2 gap-3">
-          <Button
-            onClick={onClose}
-            className="bg-[#1F1F21] text-white hover:bg-[#1F1F21]/70"
-          >
+          <Button onClick={onClose} variant="cancel">
             Cancelar
           </Button>
 
-          <Button type="submit">Salvar</Button>
+          <Button type="submit">{confirmLabel}</Button>
         </div>
       </form>
     </Form>
