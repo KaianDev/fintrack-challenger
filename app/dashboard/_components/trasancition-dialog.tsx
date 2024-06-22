@@ -50,6 +50,7 @@ export const TransactionDialog = () => {
           </DialogHeader>
           <div>
             <TransactionForm
+              formType="create"
               confirmLabel="Adicionar"
               onClose={handleCloseDialog}
               onSubmit={handleSubmit}

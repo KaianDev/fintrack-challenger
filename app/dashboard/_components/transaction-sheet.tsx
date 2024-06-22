@@ -46,6 +46,7 @@ export const TransactionSheet = ({ data }: TransactionSheetProps) => {
         </SheetHeader>
         <div className="flex-1 px-6 pb-6">
           <TransactionForm
+            formType="update"
             confirmLabel="Salvar"
             data={data}
             onSubmit={onSubmit}

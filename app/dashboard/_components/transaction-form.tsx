@@ -1,5 +1,6 @@
 "use client"
 
+import { useTransition } from "react"
 import { CalendarIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -30,10 +31,12 @@ import { TransactionSelectButton } from "./transaction-select-button"
 import { cn } from "@/lib/utils"
 import { TransactionFormData, transactionFormSchema } from "../schema"
 import { TransactionDataType } from "@/data/transaction"
+import { DeleteTransactionAlertDialog } from "./delete-transaction-alert-dialog"
 
 interface TransactionFormProps {
   data?: TransactionDataType
   confirmLabel: string
+  formType: "update" | "create"
   onSubmit: (data: TransactionFormData) => void
   onClose: () => void
 }
@@ -41,16 +44,19 @@ interface TransactionFormProps {
 export const TransactionForm = ({
   data,
   confirmLabel,
+  formType = "create",
   onSubmit,
   onClose,
 }: TransactionFormProps) => {
+  const [isPending, startTransition] = useTransition()
+
   const form = useForm<TransactionFormData>({
     resolver: zodResolver(transactionFormSchema),
     defaultValues: data,
   })
 
   const handleSubmitForm = form.handleSubmit((data) => {
-    onSubmit(data)
+    startTransition(async () => onSubmit(data))
   })
 
   return (
@@ -189,6 +195,15 @@ export const TransactionForm = ({
               </FormItem>
             )}
           />
+
+          {formType === "update" && data && data.id && (
+            <div className="flex justify-end">
+              <DeleteTransactionAlertDialog
+                id={data.id}
+                onCloseSheet={onClose}
+              />
+            </div>
+          )}
         </div>
 
         <div className="mt-auto grid w-full grid-cols-2 gap-3">
@@ -196,7 +211,9 @@ export const TransactionForm = ({
             Cancelar
           </Button>
 
-          <Button type="submit">{confirmLabel}</Button>
+          <Button disabled={isPending} type="submit">
+            {confirmLabel}
+          </Button>
         </div>
       </form>
     </Form>
