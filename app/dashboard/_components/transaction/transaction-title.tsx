@@ -1,9 +1,5 @@
 import { LucideIcon } from "lucide-react"
 
-// Utilities
-import { Colors } from "@/data/enum"
-import { cn } from "@/lib/utils"
-
 interface TransactionTitleProps {
   icon: LucideIcon
   label: string

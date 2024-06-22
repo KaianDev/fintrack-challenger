@@ -7,7 +7,7 @@ import { formatMoney } from "@/helpers/format-money"
 import { Card, CardContent } from "@/components/ui/card"
 
 interface TransactionCardProps extends PropsWithChildren {
-  value: number
+  value: string
 }
 
 export const TransactionCard = ({ value, children }: TransactionCardProps) => {
@@ -15,7 +15,7 @@ export const TransactionCard = ({ value, children }: TransactionCardProps) => {
     <Card className="rounded-lg">
       <CardContent className="space-y-2 p-6">
         {children}
-        <p className="title">{formatMoney(value)}</p>
+        <p className="title">{formatMoney(Number(value))}</p>
       </CardContent>
     </Card>
   )
