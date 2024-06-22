@@ -14,7 +14,7 @@ import { Doughnut } from "react-chartjs-2"
 import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react"
 
 // Components
-import { TransactionTitle } from "../transaction-title"
+import { TransactionTitle } from "../transaction/transaction-title"
 
 // Utilities
 import { Colors, TransactionType } from "@/data/enum"
@@ -75,7 +75,7 @@ export const ChartDoughnut = () => {
         <Doughnut data={data} options={options} />
       </div>
       <div className="w-full space-y-3 sm:max-w-52 lg:flex-1">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <TransactionTitle
             icon={TrendingUp}
             label="Ganhos"
@@ -83,7 +83,7 @@ export const ChartDoughnut = () => {
           />
           <p className="text-sm font-bold">{revenue}</p>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <TransactionTitle
             icon={TrendingDown}
             label="Gastos"
@@ -91,7 +91,7 @@ export const ChartDoughnut = () => {
           />
           <p className="text-sm font-bold">{expense}</p>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <TransactionTitle
             icon={PiggyBank}
             label="Investimentos"

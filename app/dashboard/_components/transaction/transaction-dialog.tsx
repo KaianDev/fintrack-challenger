@@ -13,11 +13,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { TransactionForm } from "./transaction-form"
+import { TransactionForm } from "."
 
 // Utilities
-import { TransactionFormData } from "../schema"
-import { TransactionAlertDialog } from "./transaction-alert-dialog"
+import { TransactionFormData } from "../../schema"
+import { TransactionAlertDialog } from "."
 
 export const TransactionDialog = () => {
   const [open, setOpen] = useState(false)

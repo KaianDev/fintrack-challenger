@@ -9,8 +9,7 @@ dayjs.extend(localeData)
 dayjs.locale("pt-br")
 
 // Components
-import { TransactionBadge } from "../transaction-badge"
-import { TransactionSheet } from "../transaction-sheet"
+import { TransactionBadge, TransactionSheet } from "../transaction"
 
 // Utilities
 import { TransactionDataType } from "@/data/transaction"

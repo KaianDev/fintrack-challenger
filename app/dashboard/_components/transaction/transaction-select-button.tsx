@@ -1,3 +1,5 @@
+"use client"
+
 import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react"
 
 // Components

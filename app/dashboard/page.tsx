@@ -2,19 +2,16 @@ import { Button } from "@/components/ui/button"
 import {
   Calendar,
   PiggyBank,
-  Plus,
   TrendingDown,
   TrendingUp,
   Wallet,
 } from "lucide-react"
 
 // Components
-import { TransactionCard } from "./_components/transaction-card"
-import { TransactionTitle } from "./_components/transaction-title"
 import { ChartBar, ChartDoughnut } from "./_components/chart"
 import { DataTable, columns } from "./_components/table"
 import { transactionData } from "@/data/transaction"
-import { TransactionDialog } from "./_components/trasancition-dialog"
+import { TransactionDialog, TransactionCard, TransactionTitle } from "./_components/transaction"
 
 const Dashboard = () => {
   return (

@@ -12,9 +12,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { TransactionFormData } from "../schema"
+import { TransactionFormData } from "../../schema"
 import { TransactionDataType } from "@/data/transaction"
-import { TransactionForm } from "./transaction-form"
+import { TransactionForm } from "."
 import { useState } from "react"
 
 interface TransactionSheetProps {

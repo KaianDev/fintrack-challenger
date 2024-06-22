@@ -25,13 +25,12 @@ import {
 } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { TransactionSelectButton } from "./transaction-select-button"
+import { DeleteTransactionAlertDialog, TransactionSelectButton } from "."
 
 // Utilities
 import { cn } from "@/lib/utils"
-import { TransactionFormData, transactionFormSchema } from "../schema"
+import { TransactionFormData, transactionFormSchema } from "../../schema"
 import { TransactionDataType } from "@/data/transaction"
-import { DeleteTransactionAlertDialog } from "./delete-transaction-alert-dialog"
 
 interface TransactionFormProps {
   data?: TransactionDataType
