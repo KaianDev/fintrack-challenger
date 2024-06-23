@@ -28,11 +28,7 @@ export const TransactionSheet = ({ data }: TransactionSheetProps) => {
   const [open, setOpen] = useState(false)
 
   const onSubmit = async (data: TransactionFormData) => {
-    const res = await updateTransaction(transactionId, data)
-    if (res?.message) {
-      // TODO::Sonner
-    }
-    setOpen(false)
+    await updateTransaction(transactionId, data)
   }
 
   const handleClose = () => setOpen(false)

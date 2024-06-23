@@ -61,7 +61,10 @@ export const TransactionForm = ({
   })
 
   const handleSubmitForm = form.handleSubmit((data) => {
-    startTransition(async () => onSubmit(data))
+    startTransition(async () => {
+      onSubmit(data)
+      onClose()
+    })
   })
 
   return (
