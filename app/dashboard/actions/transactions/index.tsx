@@ -13,7 +13,13 @@ export const getTransactions = async () => {
       { next: { tags: ["transactions"] } },
     )
     const data = (await res.json()) as Transaction[]
-    return data
+    return data.map((item) => {
+      return {
+        ...item,
+        amount: Number(item.amount),
+        date: new Date(item.date),
+      }
+    })
   } catch (error) {
     throw new Error("Erro ao carregar os dados")
   }
@@ -21,7 +27,7 @@ export const getTransactions = async () => {
 
 export const createTransaction = async (data: TransactionFormData) => {
   const userId = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
-  const body = { ...data, user_id: userId, amount: Number(data.amount) }
+  const body = { ...data, user_id: userId }
   const res = await fetch(`${process.env.BASE_API}/transactions`, {
     method: "POST",
     headers: {
@@ -42,5 +48,32 @@ export const createTransaction = async (data: TransactionFormData) => {
   }
 
   revalidateTag("transaction")
+  revalidatePath("/dashboard")
+}
+
+export const updateTransaction = async (
+  transactionId: string,
+  data: TransactionFormData,
+) => {
+  const res = await fetch(
+    `${process.env.BASE_API}/transactions/${transactionId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  )
+
+  const dataJson = await res.json()
+  console.log(dataJson,"PATCH")
+
+  if (res.status >= 400) {
+    return {
+      message: dataJson.message || "Error de servidor",
+    }
+  }
+
   revalidatePath("/dashboard")
 }

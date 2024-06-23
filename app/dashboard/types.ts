@@ -1,8 +1,8 @@
 export interface Balance {
-  earnings: string
-  expenses: string
-  investments: string
-  balance: string
+  earnings: number
+  expenses: number
+  investments: number
+  balance: number
 }
 
 export interface Transaction {
@@ -10,8 +10,8 @@ export interface Transaction {
   user_id: string
   name: string
   type: TransactionType
-  amount: string
-  date: string
+  amount: number
+  date: Date
 }
 
 export enum TransactionType {

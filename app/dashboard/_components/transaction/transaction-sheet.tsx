@@ -1,6 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import { ExternalLink } from "lucide-react"
+
+import type { Transaction } from "../../types"
 
 // Components
 import {
@@ -10,10 +13,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { TransactionFormData } from "../../schemas"
 import { TransactionForm } from "."
-import { useState } from "react"
-import { Transaction } from "../../types"
+
+// Utilities
+import { TransactionFormData } from "../../schemas"
+import { updateTransaction } from "../../actions/transactions"
 
 interface TransactionSheetProps {
   data: Transaction
@@ -23,8 +27,12 @@ export const TransactionSheet = ({ data }: TransactionSheetProps) => {
   const transactionId = data.id
   const [open, setOpen] = useState(false)
 
-  const onSubmit = (data: TransactionFormData) => {
-    console.log(data, { transactionId })
+  const onSubmit = async (data: TransactionFormData) => {
+    const res = await updateTransaction(transactionId, data)
+    if (res?.message) {
+      // TODO::Sonner
+    }
+
   }
 
   const handleClose = () => setOpen(false)

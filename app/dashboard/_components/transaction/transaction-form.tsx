@@ -6,9 +6,10 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import dayjs from "dayjs"
 
+import type { Transaction } from "../../types"
+
 // Components
 import { Button } from "@/components/ui/button"
-import { TransactionType } from "@/data/enum"
 import {
   Form,
   FormControl,
@@ -29,8 +30,8 @@ import { DeleteTransactionAlertDialog, TransactionSelectButton } from "."
 
 // Utilities
 import { cn } from "@/lib/utils"
-import { TransactionFormData, transactionFormSchema } from "../../schemas"
-import { Transaction } from "../../types"
+import { type TransactionFormData, transactionFormSchema } from "../../schemas"
+import { TransactionType } from "@/data/enum"
 
 interface TransactionFormProps {
   data?: Transaction
@@ -123,7 +124,7 @@ export const TransactionForm = ({
                         )}
                       >
                         {field.value ? (
-                          dayjs(field.value).format("DD [de] MMMM YYYY")
+                          dayjs(field.value).utc().format("DD [de] MMMM YYYY")
                         ) : (
                           <span>Selecione uma data</span>
                         )}

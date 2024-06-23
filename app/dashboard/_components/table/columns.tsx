@@ -43,7 +43,6 @@ export const columns: ColumnDef<Transaction>[] = [
     cell({ row }) {
       const date = row.getValue("date") as string
       const daysLocal = dayjs(new Date(date))
-      console.log(daysLocal)
       const formattedDate = daysLocal.tz(tz).utc().format("DD [de] MMMM YYYY")
 
       return <p className="truncate text-sm text-muted">{formattedDate}</p>
@@ -53,8 +52,8 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "amount",
     header: "Valor",
     cell({ row }) {
-      const amount = row.getValue("amount") as string
-      const formattedAmount = formatMoney(Number(amount))
+      const amount = row.getValue("amount") as number
+      const formattedAmount = formatMoney(amount)
 
       return <>{formattedAmount}</>
     },
