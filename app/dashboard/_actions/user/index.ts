@@ -1,16 +1,17 @@
 "use server"
 
-import { Balance } from "../../types"
+import type { Balance } from "../../types"
+import { getUserBalance as getUserBalanceService } from "@/services/user"
 
 export const getUserBalance = async (id: string): Promise<Balance> => {
   try {
-    const res = await fetch(`${process.env.BASE_API}/users/${id}/balance`)
-    const data = (await res.json()) as Balance
+    const { balance, earnings, expenses, investments } =
+      await getUserBalanceService(id)
     return {
-      earnings: Number(data.earnings || 0),
-      balance: Number(data.balance || 0),
-      expenses: Number(data.expenses || 0),
-      investments: Number(data.investments || 0),
+      earnings: earnings.toNumber(),
+      balance: balance.toNumber(),
+      expenses: expenses.toNumber(),
+      investments: investments.toNumber(),
     }
   } catch (error) {
     throw new Error("Erro ao carregar dados")

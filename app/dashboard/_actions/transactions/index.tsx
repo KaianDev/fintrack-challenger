@@ -1,23 +1,23 @@
 "use server"
 
-import { revalidatePath, revalidateTag } from "next/cache"
+import { revalidatePath } from "next/cache"
 import { TransactionFormData } from "../../schemas"
-import { Transaction } from "../../types"
+
+import {
+  findTransactionByUserId,
+  createTransaction as createTransactionService,
+  updateTransaction as updateTransactionService,
+  deleteTransaction as deleteTransactionService,
+} from "@/services/transaction"
 
 export const getTransactions = async () => {
   const userId = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
-
   try {
-    const res = await fetch(
-      `${process.env.BASE_API}/transactions?userId=${userId}`,
-      { next: { tags: ["transactions"] } },
-    )
-    const data = (await res.json()) as Transaction[]
-    return data.map((item) => {
+    const transactions = await findTransactionByUserId(userId)
+    return transactions.map((t) => {
       return {
-        ...item,
-        amount: Number(item.amount),
-        date: new Date(item.date),
+        ...t,
+        amount: t.amount.toNumber(),
       }
     })
   } catch (error) {
@@ -26,61 +26,29 @@ export const getTransactions = async () => {
 }
 
 export const createTransaction = async (data: TransactionFormData) => {
-  const userId = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
-  const body = { ...data, user_id: userId }
-  const res = await fetch(`${process.env.BASE_API}/transactions`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-    next: {
-      tags: ["transactions"],
-    },
-  })
+  try {
+    const userId = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
+    const createData = { ...data, userId }
+    await createTransactionService(createData)
 
-  const dataJson = await res.json()
-
-  if (res.status >= 400) {
-    return {
-      message: dataJson.message || "Error de servidor",
-    }
+    revalidatePath("/dashboard")
+  } catch (error) {
+    throw new Error("Erro ao criar transação")
   }
-
-  revalidateTag("transaction")
-  revalidatePath("/dashboard")
 }
 
 export const updateTransaction = async (
   transactionId: string,
   data: TransactionFormData,
 ) => {
-  const res = await fetch(
-    `${process.env.BASE_API}/transactions/${transactionId}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    },
-  )
-
-  const dataJson = await res.json()
-
-  if (res.status >= 400) {
-    return {
-      message: dataJson.message || "Error de servidor",
-    }
-  }
-
-  revalidatePath("/dashboard")
+  try {
+    await updateTransactionService(transactionId, data)
+    revalidatePath("/dashboard")
+  } catch (error) {}
 }
 
 export const deleteTransaction = async (id: string) => {
-  await fetch(`${process.env.BASE_API}/transactions/${id}`, {
-    method: "DELETE",
-  })
+  await deleteTransactionService(id)
 
   revalidatePath("/dashboard")
 }
