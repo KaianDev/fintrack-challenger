@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { TransactionFormData } from "../../schema"
+import { TransactionFormData } from "../../schemas"
 import { TransactionForm } from "."
 import { useState } from "react"
 import { Transaction } from "../../types"

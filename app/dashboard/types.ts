@@ -7,10 +7,11 @@ export interface Balance {
 
 export interface Transaction {
   id: string
-  userId: string
+  user_id: string
   name: string
   type: TransactionType
   amount: string
+  date: string
 }
 
 export enum TransactionType {

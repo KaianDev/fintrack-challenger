@@ -16,8 +16,9 @@ import {
 import { TransactionForm } from "."
 
 // Utilities
-import { TransactionFormData } from "../../schema"
+import { TransactionFormData } from "../../schemas"
 import { TransactionAlertDialog } from "."
+import { createTransaction } from "../../actions/transactions"
 
 export const TransactionDialog = () => {
   const [open, setOpen] = useState(false)
@@ -25,7 +26,10 @@ export const TransactionDialog = () => {
 
   const handleCloseDialog = () => setOpen(false)
   const handleSubmit = async (data: TransactionFormData) => {
-    console.log(data)
+    const res = await createTransaction(data)
+    if (res?.message) {
+      // TODO: Add Sonner
+    }
     setOpen(false)
     setAlertOpen(true)
   }

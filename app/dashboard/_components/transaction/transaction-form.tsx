@@ -29,7 +29,7 @@ import { DeleteTransactionAlertDialog, TransactionSelectButton } from "."
 
 // Utilities
 import { cn } from "@/lib/utils"
-import { TransactionFormData, transactionFormSchema } from "../../schema"
+import { TransactionFormData, transactionFormSchema } from "../../schemas"
 import { Transaction } from "../../types"
 
 interface TransactionFormProps {
@@ -51,7 +51,12 @@ export const TransactionForm = ({
 
   const form = useForm<TransactionFormData>({
     resolver: zodResolver(transactionFormSchema),
-    defaultValues: data,
+    defaultValues: {
+      amount: data?.amount,
+      date: data?.date,
+      name: data?.name,
+      type: data?.type,
+    },
   })
 
   const handleSubmitForm = form.handleSubmit((data) => {
@@ -67,7 +72,7 @@ export const TransactionForm = ({
         <div className="space-y-6">
           <FormField
             control={form.control}
-            name="title"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Título</FormLabel>
@@ -129,7 +134,7 @@ export const TransactionForm = ({
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
-                      selected={field.value}
+                      selected={new Date(field.value)}
                       onSelect={field.onChange}
                       disabled={(date) =>
                         date > new Date() || date < new Date("1900-01-01")

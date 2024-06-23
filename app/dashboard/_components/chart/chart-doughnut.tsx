@@ -18,46 +18,51 @@ import { TransactionTitle } from "../transaction/transaction-title"
 
 // Utilities
 import { Colors, TransactionType } from "@/data/enum"
+import { Transaction } from "../../types"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const getDataValue = (type: TransactionType) => {
-  return transactionData
-    .filter((t) => t.type === type)
-    .reduce((acc, t) => {
-      return (acc = acc + t.amount)
-    }, 0)
+interface ChartDoughnutProps {
+  transactions: Transaction[]
 }
 
-const data = {
-  labels: ["Ganhos", "Gastos", "Investimentos"],
-  datasets: [
-    {
-      label: "",
-      data: [
-        getDataValue(TransactionType.EARNING),
-        getDataValue(TransactionType.EXPENSE),
-        getDataValue(TransactionType.INVESTMENT),
-      ],
-      backgroundColor: [Colors.GREEN, Colors.RED, Colors.BLUE],
-      borderRadius: 8,
-      borderWidth: 0,
-      spacing: 8,
-    },
-  ],
-} as ChartData<"doughnut">
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  cutout: 65,
-} as ChartOptions<"doughnut">
-
 export const ChartDoughnut = () => {
+  const getDataValue = (type: TransactionType) => {
+    return transactionData
+      .filter((t) => t.type === type)
+      .reduce((acc, t) => {
+        return (acc = acc + t.amount)
+      }, 0)
+  }
+
+  const data = {
+    labels: ["Ganhos", "Gastos", "Investimentos"],
+    datasets: [
+      {
+        label: "",
+        data: [
+          getDataValue(TransactionType.EARNING),
+          getDataValue(TransactionType.EXPENSE),
+          getDataValue(TransactionType.INVESTMENT),
+        ],
+        backgroundColor: [Colors.GREEN, Colors.RED, Colors.BLUE],
+        borderRadius: 8,
+        borderWidth: 0,
+        spacing: 8,
+      },
+    ],
+  } as ChartData<"doughnut">
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    cutout: 65,
+  } as ChartOptions<"doughnut">
+
   const total = transactionData.reduce((acc, t) => acc + t.amount, 0)
 
   const getTotalForTypePercent = (type: TransactionType) => {
@@ -65,7 +70,7 @@ export const ChartDoughnut = () => {
     return `${totalForType}%`
   }
 
-  const EARNING = getTotalForTypePercent(TransactionType.EARNING)
+  const earning = getTotalForTypePercent(TransactionType.EARNING)
   const expense = getTotalForTypePercent(TransactionType.EXPENSE)
   const investment = getTotalForTypePercent(TransactionType.INVESTMENT)
 
@@ -81,7 +86,7 @@ export const ChartDoughnut = () => {
             label="Ganhos"
             color="text-primary"
           />
-          <p className="text-sm font-bold">{EARNING}</p>
+          <p className="text-sm font-bold">{earning}</p>
         </div>
         <div className="flex items-center justify-between gap-2">
           <TransactionTitle

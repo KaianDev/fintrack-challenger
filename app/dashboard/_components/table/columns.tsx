@@ -2,11 +2,15 @@
 
 import dayjs from "dayjs"
 import "dayjs/locale/pt-br"
-import localeData from "dayjs/plugin/localeData"
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
 import { ColumnDef } from "@tanstack/react-table"
 
-dayjs.extend(localeData)
+dayjs.extend(utc)
+dayjs.extend(timezone)
 dayjs.locale("pt-br")
+
+const tz = process.env.NEXT_PUBLIC_TIMEZONE || "America/Fortaleza"
 
 // Components
 import { TransactionBadge, TransactionSheet } from "../transaction"
@@ -18,11 +22,11 @@ import { Transaction } from "../../types"
 
 export const columns: ColumnDef<Transaction>[] = [
   {
-    accessorKey: "title",
+    accessorKey: "name",
     header: "Título",
     cell({ row }) {
-      const title = row.getValue("title") as string
-      return <p className="truncate">{title}</p>
+      const name = row.getValue("name") as string
+      return <p className="truncate">{name}</p>
     },
   },
   {
@@ -37,8 +41,10 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "date",
     header: "Data",
     cell({ row }) {
-      const date = row.getValue("date") as Date
-      const formattedDate = dayjs(date).format("DD [de] MMMM YYYY")
+      const date = row.getValue("date") as string
+      const daysLocal = dayjs(new Date(date))
+      console.log(daysLocal)
+      const formattedDate = daysLocal.tz(tz).utc().format("DD [de] MMMM YYYY")
 
       return <p className="truncate text-sm text-muted">{formattedDate}</p>
     },
@@ -47,8 +53,8 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "amount",
     header: "Valor",
     cell({ row }) {
-      const amount = row.getValue("amount") as number
-      const formattedAmount = formatMoney(amount)
+      const amount = row.getValue("amount") as string
+      const formattedAmount = formatMoney(Number(amount))
 
       return <>{formattedAmount}</>
     },
