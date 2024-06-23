@@ -12,32 +12,46 @@ import {
   ChartOptions,
 } from "chart.js"
 import { Bar } from "react-chartjs-2"
+import dayjs from "dayjs"
+import "dayjs/locale/pt-br"
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.locale("pt-br")
 
 // Utilities
-import { transactionData } from "@/data/transaction"
 import { Colors } from "@/data/enum"
+import { Transaction } from "../../types"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-const labels = transactionData.slice(0, 10).map((t) => t.date.getDate())
+interface ChartBarProps {
+  transactionData: Transaction[]
+}
 
-const data = {
-  labels,
-  datasets: [
-    {
-      data: transactionData.slice(0, 10).map((t) => t.amount),
-      backgroundColor: transactionData.map((t) => {
-        if (t.type === "EXPENSE") return Colors.RED
-        if (t.type === "EARNING") return Colors.GREEN
-        if (t.type === "INVESTMENT") return Colors.BLUE
-      }),
-      borderRadius: 8,
-      borderSkipped: false,
-    },
-  ],
-} as ChartData<"bar">
+export const ChartBar = ({ transactionData }: ChartBarProps) => {
+  const labels = transactionData
+    .slice(0, 10)
+    .map((t) => dayjs(t.date).utc().get("D"))
 
-export const ChartBar = () => {
+  const data = {
+    labels,
+    datasets: [
+      {
+        data: transactionData.slice(0, 10).map((t) => t.amount),
+        backgroundColor: transactionData.map((t) => {
+          if (t.type === "EXPENSE") return Colors.RED
+          if (t.type === "EARNING") return Colors.GREEN
+          if (t.type === "INVESTMENT") return Colors.BLUE
+        }),
+        borderRadius: 8,
+        borderSkipped: false,
+      },
+    ],
+  } as ChartData<"bar">
+
   const options = {
     plugins: {
       legend: {
@@ -64,7 +78,11 @@ export const ChartBar = () => {
       <div>
         <p className="mb-6 font-bold">Movimentações</p>
         <div className="space-y-1">
-          <strong className="title">13 Transações</strong>
+          <strong className="title">
+            {transactionData.length === 1
+              ? "1 Transação"
+              : `${transactionData.length} Transações`}
+          </strong>
           <p className="text-sm text-muted">Ao longo do mês</p>
         </div>
       </div>

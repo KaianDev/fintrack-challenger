@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { Calendar } from "lucide-react"
+import dayjs from "dayjs"
+import "dayjs/locale/pt-br"
+
+dayjs.locale("pt-br")
 
 // Components
 import { ChartBar, ChartDoughnut } from "./_components/chart"
@@ -8,6 +12,8 @@ import {
   TransactionBalance,
   TransactionDialog,
 } from "./_components/transaction"
+
+// Utilities
 import { getTransactions } from "./actions/transactions"
 import { getUserBalance } from "./actions/user"
 
@@ -23,10 +29,12 @@ const Dashboard = async () => {
         <div className="flex justify-between gap-2 sm:justify-end">
           <Button
             variant="outline"
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 hover:bg-card"
           >
             <Calendar size={16} />
-            Março
+            <span className="capitalize">
+              {dayjs(new Date()).format("MMMM")}
+            </span>
           </Button>
           <TransactionDialog />
         </div>
@@ -42,7 +50,7 @@ const Dashboard = async () => {
         {transactionData.length > 0 && (
           <div className="flex w-full flex-col gap-6 lg:flex-row xl:max-w-lg xl:flex-col">
             <ChartDoughnut balanceData={balance} />
-            <ChartBar />
+            <ChartBar transactionData={transactionData} />
           </div>
         )}
       </section>
