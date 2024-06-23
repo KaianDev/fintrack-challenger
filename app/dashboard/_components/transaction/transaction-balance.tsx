@@ -4,7 +4,7 @@ import { PiggyBank, TrendingDown, TrendingUp, Wallet } from "lucide-react"
 import { TransactionCard, TransactionTitle } from "."
 
 // Utilities
-import { getUserBalance } from "../../actions/user"
+import { getUserBalance } from "../../_actions/user"
 
 export const TransactionBalance = async () => {
   // TODO: Get user id by session

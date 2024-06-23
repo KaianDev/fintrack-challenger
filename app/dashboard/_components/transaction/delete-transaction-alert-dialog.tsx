@@ -5,7 +5,7 @@ import { Trash2 } from "lucide-react"
 
 // Components
 import { TransactionAlertDialog } from "."
-import { deleteTransaction } from "../../actions/transactions"
+import { deleteTransaction } from "../../_actions/transactions"
 
 interface DeleteTransactionAlertDialogProps {
   id: string

@@ -14,8 +14,8 @@ import {
 } from "./_components/transaction"
 
 // Utilities
-import { getTransactions } from "./actions/transactions"
-import { getUserBalance } from "./actions/user"
+import { getTransactions } from "./_actions/transactions"
+import { getUserBalance } from "./_actions/user"
 
 const Dashboard = async () => {
   const id = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"

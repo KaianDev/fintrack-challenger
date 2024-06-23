@@ -18,7 +18,7 @@ import { TransactionForm } from "."
 // Utilities
 import { TransactionFormData } from "../../schemas"
 import { TransactionAlertDialog } from "."
-import { createTransaction } from "../../actions/transactions"
+import { createTransaction } from "../../_actions/transactions"
 
 export const TransactionDialog = () => {
   const [open, setOpen] = useState(false)

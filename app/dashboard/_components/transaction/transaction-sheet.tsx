@@ -17,7 +17,7 @@ import { TransactionForm } from "."
 
 // Utilities
 import { TransactionFormData } from "../../schemas"
-import { updateTransaction } from "../../actions/transactions"
+import { updateTransaction } from "../../_actions/transactions"
 
 interface TransactionSheetProps {
   data: Transaction
