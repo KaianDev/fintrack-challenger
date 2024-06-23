@@ -18,33 +18,22 @@ import { TransactionTitle } from "../transaction/transaction-title"
 
 // Utilities
 import { Colors, TransactionType } from "@/data/enum"
-import { Transaction } from "../../types"
+import { Balance, Transaction } from "../../types"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 interface ChartDoughnutProps {
-  transactions: Transaction[]
+  balanceData: Balance
 }
 
-export const ChartDoughnut = () => {
-  const getDataValue = (type: TransactionType) => {
-    return transactionData
-      .filter((t) => t.type === type)
-      .reduce((acc, t) => {
-        return (acc = acc + t.amount)
-      }, 0)
-  }
-
+export const ChartDoughnut = ({ balanceData }: ChartDoughnutProps) => {
+  const { earnings, expenses, investments } = balanceData
   const data = {
     labels: ["Ganhos", "Gastos", "Investimentos"],
     datasets: [
       {
         label: "",
-        data: [
-          getDataValue(TransactionType.EARNING),
-          getDataValue(TransactionType.EXPENSE),
-          getDataValue(TransactionType.INVESTMENT),
-        ],
+        data: [earnings, expenses, investments],
         backgroundColor: [Colors.GREEN, Colors.RED, Colors.BLUE],
         borderRadius: 8,
         borderWidth: 0,
@@ -63,16 +52,17 @@ export const ChartDoughnut = () => {
     cutout: 65,
   } as ChartOptions<"doughnut">
 
-  const total = transactionData.reduce((acc, t) => acc + t.amount, 0)
+  const total = earnings + expenses + investments
 
-  const getTotalForTypePercent = (type: TransactionType) => {
-    const totalForType = Math.round((getDataValue(type) / total) * 100)
-    return `${totalForType}%`
+  const getTotalForTypePercent = (value: number) => {
+    if (total === 0) return `0%`
+    const percent = ((value / total) * 100).toFixed()
+    return `${percent}%`
   }
 
-  const earning = getTotalForTypePercent(TransactionType.EARNING)
-  const expense = getTotalForTypePercent(TransactionType.EXPENSE)
-  const investment = getTotalForTypePercent(TransactionType.INVESTMENT)
+  const earningPercent = getTotalForTypePercent(earnings)
+  const expensePercent = getTotalForTypePercent(expenses)
+  const investmentPercent = getTotalForTypePercent(investments)
 
   return (
     <section className="flex items-center justify-center gap-6 rounded-lg border bg-card px-12 py-6 sm:flex-row sm:gap-12 xl:max-h-[218px]">
@@ -86,7 +76,7 @@ export const ChartDoughnut = () => {
             label="Ganhos"
             color="text-primary"
           />
-          <p className="text-sm font-bold">{earning}</p>
+          <p className="text-sm font-bold">{earningPercent}</p>
         </div>
         <div className="flex items-center justify-between gap-2">
           <TransactionTitle
@@ -94,7 +84,7 @@ export const ChartDoughnut = () => {
             label="Gastos"
             color="text-secondary"
           />
-          <p className="text-sm font-bold">{expense}</p>
+          <p className="text-sm font-bold">{expensePercent}</p>
         </div>
         <div className="flex items-center justify-between gap-2">
           <TransactionTitle
@@ -102,7 +92,7 @@ export const ChartDoughnut = () => {
             label="Investimentos"
             color="text-tertiary"
           />
-          <p className="text-sm font-bold">{investment}</p>
+          <p className="text-sm font-bold">{investmentPercent}</p>
         </div>
       </div>
     </section>
