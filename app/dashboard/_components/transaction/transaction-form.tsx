@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import dayjs from "dayjs"
 
-import type { Transaction } from "../../types"
+import type { TransactionData } from "../../types"
 
 // Components
 import { Button } from "@/components/ui/button"
@@ -31,10 +31,10 @@ import { DeleteTransactionAlertDialog, TransactionSelectButton } from "."
 // Utilities
 import { cn } from "@/lib/utils"
 import { type TransactionFormData, transactionFormSchema } from "../../schemas"
-import { TransactionType } from "@/data/enum"
+import { TransactionType } from "@prisma/client"
 
 interface TransactionFormProps {
-  data?: Transaction
+  data?: TransactionData
   confirmLabel: string
   formType: "update" | "create"
   onSubmit: (data: TransactionFormData) => void

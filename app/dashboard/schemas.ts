@@ -1,4 +1,4 @@
-import { TransactionType } from "@/data/enum"
+import { TransactionType } from "@prisma/client"
 import { z } from "zod"
 
 export const transactionFormSchema = z.object({

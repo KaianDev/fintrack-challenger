@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { ExternalLink } from "lucide-react"
 
-import type { Transaction } from "../../types"
+import type { TransactionData } from "../../types"
 
 // Components
 import {
@@ -19,8 +19,9 @@ import { TransactionForm } from "."
 import { TransactionFormData } from "../../schemas"
 import { updateTransaction } from "../../_actions/transactions"
 
+
 interface TransactionSheetProps {
-  data: Transaction
+  data: TransactionData
 }
 
 export const TransactionSheet = ({ data }: TransactionSheetProps) => {

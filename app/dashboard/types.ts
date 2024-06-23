@@ -1,3 +1,4 @@
+import { $Enums } from "@prisma/client"
 export interface Balance {
   earnings: number
   expenses: number
@@ -5,17 +6,12 @@ export interface Balance {
   balance: number
 }
 
-export interface Transaction {
+export interface TransactionData {
+  amount: number
   id: string
   userId: string
   name: string
-  type: TransactionType
-  amount: number
+  type: $Enums.TransactionType
   date: Date
 }
 
-export enum TransactionType {
-  INVESTMENT = "INVESTMENT",
-  EARNING = "EARNING",
-  EXPENSE = "EXPENSE",
-}

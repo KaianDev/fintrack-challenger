@@ -17,8 +17,8 @@ import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react"
 import { TransactionTitle } from "../transaction/transaction-title"
 
 // Utilities
-import { Colors, TransactionType } from "@/data/enum"
-import { Balance, Transaction } from "../../types"
+import { Colors } from "@/data/enum"
+import { Balance } from "../../types"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
