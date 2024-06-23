@@ -67,13 +67,20 @@ export const updateTransaction = async (
   )
 
   const dataJson = await res.json()
-  console.log(dataJson,"PATCH")
 
   if (res.status >= 400) {
     return {
       message: dataJson.message || "Error de servidor",
     }
   }
+
+  revalidatePath("/dashboard")
+}
+
+export const deleteTransaction = async (id: string) => {
+  await fetch(`${process.env.BASE_API}/transactions/${id}`, {
+    method: "DELETE",
+  })
 
   revalidatePath("/dashboard")
 }

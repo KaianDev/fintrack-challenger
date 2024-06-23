@@ -1,6 +1,6 @@
 "use client"
 
-import { Check, X } from "lucide-react"
+import { Check, Loader, X } from "lucide-react"
 import { PropsWithChildren } from "react"
 
 import {
@@ -24,9 +24,9 @@ interface TransactionAlertDialogProps extends PropsWithChildren {
   title: string
   description: string
   open: boolean
-
+  isPending?: boolean
   setOpen: (v: boolean) => void
-  onConfirm: () => void
+  onConfirm: () => void | Promise<void>
 }
 
 export const TransactionAlertDialog = ({
@@ -35,6 +35,7 @@ export const TransactionAlertDialog = ({
   variant,
   open,
   children,
+  isPending,
   setOpen,
   onConfirm,
 }: TransactionAlertDialogProps) => {
@@ -70,15 +71,24 @@ export const TransactionAlertDialog = ({
           {variant === "delete" && (
             <>
               <AlertDialogCancel
+                disabled={isPending}
                 className={cn(buttonVariants({ variant: "cancel" }))}
               >
                 Cancelar
               </AlertDialogCancel>
               <AlertDialogAction
+                disabled={isPending}
                 onClick={onConfirm}
                 className={cn(buttonVariants({ variant: "secondary" }))}
               >
-                Deletar
+                {isPending ? (
+                  <>
+                    <Loader className="mr-1 size-4" />
+                    Carregando...
+                  </>
+                ) : (
+                  "Deletar"
+                )}
               </AlertDialogAction>
             </>
           )}

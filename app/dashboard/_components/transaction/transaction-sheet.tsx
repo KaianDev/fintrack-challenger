@@ -32,7 +32,7 @@ export const TransactionSheet = ({ data }: TransactionSheetProps) => {
     if (res?.message) {
       // TODO::Sonner
     }
-
+    setOpen(false)
   }
 
   const handleClose = () => setOpen(false)

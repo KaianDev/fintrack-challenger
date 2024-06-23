@@ -1,7 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, Loader } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import dayjs from "dayjs"
@@ -212,12 +212,19 @@ export const TransactionForm = ({
         </div>
 
         <div className="mt-auto grid w-full grid-cols-2 gap-3">
-          <Button onClick={onClose} variant="cancel">
+          <Button disabled={isPending} onClick={onClose} variant="cancel">
             Cancelar
           </Button>
 
           <Button disabled={isPending} type="submit">
-            {confirmLabel}
+            {isPending ? (
+              <>
+                <Loader className="mr-1 size-4" />
+                Carregando...
+              </>
+            ) : (
+              confirmLabel
+            )}
           </Button>
         </div>
       </form>

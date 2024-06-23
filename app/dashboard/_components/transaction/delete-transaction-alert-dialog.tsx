@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { Trash2 } from "lucide-react"
 
 // Components
 import { TransactionAlertDialog } from "."
+import { deleteTransaction } from "../../actions/transactions"
 
 interface DeleteTransactionAlertDialogProps {
   id: string
@@ -17,10 +18,13 @@ export const DeleteTransactionAlertDialog = ({
 }: DeleteTransactionAlertDialogProps) => {
   const [open, setOpen] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
-  const handleDeleteTransaction = () => {
-    console.log(id)
-    setOpenAlert(true)
+  const handleDeleteTransaction = async () => {
+    startTransition(async () => {
+      await deleteTransaction(id)
+      setOpenAlert(true)
+    })
   }
 
   const handleCloseDialogDelete = () => {
@@ -36,6 +40,7 @@ export const DeleteTransactionAlertDialog = ({
         onConfirm={handleDeleteTransaction}
         open={open}
         setOpen={setOpen}
+        isPending={isPending}
         variant="delete"
       >
         <button className="flex items-center gap-1 text-xs font-bold text-secondary">
