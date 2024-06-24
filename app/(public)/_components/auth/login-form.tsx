@@ -3,7 +3,6 @@
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { Loader } from "lucide-react"
-import { signIn } from "next-auth/react"
 
 // Components
 import {
@@ -22,6 +21,7 @@ import { Button } from "@/components/ui/button"
 import { AuthFormData, authSchema } from "@/schemas/user"
 import { login } from "../../_actions/auth"
 import { useRouter } from "next/navigation"
+import { toast } from "@/hooks"
 
 export const LoginForm = () => {
   const router = useRouter()
@@ -32,10 +32,9 @@ export const LoginForm = () => {
 
   const handleLogin = form.handleSubmit((data) => {
     startTransaction(async () => {
-      const { email, password } = data
       const res = await login(data)
       if (res?.message) {
-        // TODO: sonner
+        toast("Erro", res.message)
       } else {
         router.replace("/dashboard")
       }
@@ -57,6 +56,7 @@ export const LoginForm = () => {
                     {...field}
                     autoComplete="off"
                     placeholder="Seu e-mail"
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -75,6 +75,7 @@ export const LoginForm = () => {
                     type="password"
                     autoComplete="off"
                     placeholder="Sua senha"
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormMessage />

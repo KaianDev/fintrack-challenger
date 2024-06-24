@@ -1,10 +1,9 @@
 "use client"
 
+import { useTransition } from "react"
 import { useForm } from "react-hook-form"
+import { Loader } from "lucide-react"
 import { zodResolver } from "@hookform/resolvers/zod"
-
-// Utilities
-import { updateUserSchema, UpdateUserFormData } from "@/schemas/user"
 
 // Components
 import {
@@ -17,9 +16,11 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useTransition } from "react"
+
+// Utilities
+import { toast } from "@/hooks"
+import { updateUserSchema, UpdateUserFormData } from "@/schemas/user"
 import { updateUser } from "../../_actions/user"
-import { Loader } from "lucide-react"
 
 interface UserUpdateFormProps {
   onClose: () => void
@@ -39,12 +40,12 @@ export const UserUpdateForm = ({ data, onClose }: UserUpdateFormProps) => {
   const handleSubmit = form.handleSubmit((data) => {
     startTransaction(async () => {
       const res = await updateUser(data)
-
-      if (res?.message) {
-      } else {
-        // toast
-      }
       onClose()
+      if (res?.message) {
+        toast("Erro", res.message)
+      } else {
+        toast("Dados atualizados com sucesso!")
+      }
     })
   })
 

@@ -18,7 +18,7 @@ import { TransactionForm } from "."
 // Utilities
 import { TransactionFormData } from "../../schemas"
 import { updateTransaction } from "../../_actions/transactions"
-
+import { toast } from "@/hooks"
 
 interface TransactionSheetProps {
   data: TransactionData
@@ -29,7 +29,12 @@ export const TransactionSheet = ({ data }: TransactionSheetProps) => {
   const [open, setOpen] = useState(false)
 
   const onSubmit = async (data: TransactionFormData) => {
-    await updateTransaction(transactionId, data)
+    const res = await updateTransaction(transactionId, data)
+    if (res?.message) {
+      toast("Erro", res.message)
+    } else {
+      toast("Transação atualizado com sucesso!")
+    }
   }
 
   const handleClose = () => setOpen(false)

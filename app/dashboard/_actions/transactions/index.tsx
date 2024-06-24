@@ -45,7 +45,9 @@ export const createTransaction = async (data: TransactionFormData) => {
 
     revalidatePath("/dashboard")
   } catch (error) {
-    throw new Error("Erro ao criar transação")
+    return {
+      message:"Ocorreu um erro durante a adição da nova transação"
+    }
   }
 }
 
@@ -56,7 +58,11 @@ export const updateTransaction = async (
   try {
     await updateTransactionService(transactionId, data)
     revalidatePath("/dashboard")
-  } catch (error) {}
+  } catch (error) {
+    return {
+      message:"Ocorreu um erro durante a edição da transação"
+    }
+  }
 }
 
 export const deleteTransaction = async (id: string) => {

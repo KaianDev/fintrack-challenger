@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button"
 // Utilities
 import { CreateUserFormData, createUserSchema } from "@/schemas/user"
 import { signUp } from "../../_actions/auth"
+import { toast } from "@/hooks"
 
 export const SignUpForm = () => {
   const router = useRouter()
@@ -33,7 +34,9 @@ export const SignUpForm = () => {
     startTransaction(async () => {
       const res = await signUp(data)
       if (res?.message) {
+        toast("Erro", res.message)
       } else {
+        toast("Usuário criado com sucesso")
         router.replace("/")
       }
     })
@@ -50,7 +53,12 @@ export const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input {...field} autoComplete="off" placeholder="Seu nome" />
+                  <Input
+                    {...field}
+                    autoComplete="off"
+                    placeholder="Seu nome"
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -67,6 +75,7 @@ export const SignUpForm = () => {
                     {...field}
                     autoComplete="off"
                     placeholder="Seu sobrenome"
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -84,6 +93,7 @@ export const SignUpForm = () => {
                     {...field}
                     autoComplete="off"
                     placeholder="Seu e-mail"
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -102,6 +112,7 @@ export const SignUpForm = () => {
                     type="password"
                     autoComplete="off"
                     placeholder="Sua senha"
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormMessage />
