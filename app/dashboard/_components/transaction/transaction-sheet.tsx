@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { ExternalLink } from "lucide-react"
 
-import type { Transaction } from "../../types"
+import type { TransactionData } from "../../types"
 
 // Components
 import {
@@ -18,9 +18,10 @@ import { TransactionForm } from "."
 // Utilities
 import { TransactionFormData } from "../../schemas"
 import { updateTransaction } from "../../_actions/transactions"
+import { toast } from "@/hooks"
 
 interface TransactionSheetProps {
-  data: Transaction
+  data: TransactionData
 }
 
 export const TransactionSheet = ({ data }: TransactionSheetProps) => {
@@ -30,9 +31,10 @@ export const TransactionSheet = ({ data }: TransactionSheetProps) => {
   const onSubmit = async (data: TransactionFormData) => {
     const res = await updateTransaction(transactionId, data)
     if (res?.message) {
-      // TODO::Sonner
+      toast("Erro", res.message)
+    } else {
+      toast("Transação atualizado com sucesso!")
     }
-    setOpen(false)
   }
 
   const handleClose = () => setOpen(false)

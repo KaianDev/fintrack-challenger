@@ -6,6 +6,8 @@ import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
 import { ColumnDef } from "@tanstack/react-table"
 
+import type { TransactionData } from "../../types"
+
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.locale("pt-br")
@@ -16,11 +18,10 @@ const tz = process.env.NEXT_PUBLIC_TIMEZONE || "America/Fortaleza"
 import { TransactionBadge, TransactionSheet } from "../transaction"
 
 // Utilities
-import { TransactionType } from "@/data/enum"
 import { formatMoney } from "@/helpers/format-money"
-import { Transaction } from "../../types"
+import { TransactionType } from "@prisma/client"
 
-export const columns: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<TransactionData>[] = [
   {
     accessorKey: "name",
     header: "Título",

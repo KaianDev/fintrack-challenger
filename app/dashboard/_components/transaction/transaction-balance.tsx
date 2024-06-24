@@ -7,9 +7,7 @@ import { TransactionCard, TransactionTitle } from "."
 import { getUserBalance } from "../../_actions/user"
 
 export const TransactionBalance = async () => {
-  // TODO: Get user id by session
-  const id = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
-  const { balance, earnings, expenses, investments } = await getUserBalance(id)
+  const { balance, earnings, expenses, investments } = await getUserBalance()
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

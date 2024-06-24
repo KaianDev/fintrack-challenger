@@ -6,7 +6,8 @@ import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react"
 import { FormLabel } from "@/components/ui/form"
 
 // Utilities
-import { Colors, TransactionType } from "@/data/enum"
+import { Colors } from "@/data/enum"
+import { TransactionType } from "@prisma/client"
 
 interface TransactionSelectButtonProps {
   type: TransactionType

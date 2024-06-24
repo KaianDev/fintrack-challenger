@@ -26,11 +26,7 @@ export const TransactionDialog = () => {
 
   const handleCloseDialog = () => setOpen(false)
   const handleSubmit = async (data: TransactionFormData) => {
-    const res = await createTransaction(data)
-    if (res?.message) {
-      // TODO: Add Sonner
-    }
-    setOpen(false)
+    await createTransaction(data)
     setAlertOpen(true)
   }
 

@@ -3,9 +3,12 @@ import Link from "next/link"
 
 // Components
 import { NavLink } from "."
-import { UserCard } from "."
+import { UserCard } from "../user"
+import { getCurrentUser } from "@/app/(public)/_actions/auth"
 
-export const Header = () => {
+export const Header = async () => {
+  const user = await getCurrentUser()
+
   return (
     <header className="h-[72px] border-b">
       <div className="mx-auto flex h-full w-full max-w-[1378px] items-center justify-between px-8">
@@ -24,7 +27,7 @@ export const Header = () => {
           <NavLink href="/dashboard" label="Dashboard" />
           <NavLink href="/analise" label="Análise" />
         </div>
-        <UserCard />
+        <UserCard data={user!} />
       </div>
     </header>
   )

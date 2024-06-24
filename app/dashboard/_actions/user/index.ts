@@ -1,18 +1,48 @@
 "use server"
 
-import { Balance } from "../../types"
+import { redirect } from "next/navigation"
+import type { Balance } from "../../types"
+import {
+  getUserBalance as getUserBalanceService,
+  updateUser as updateUserService,
+  UpdateUserData,
+} from "@/services/user"
+import { auth } from "@/lib/auth"
+import { revalidatePath } from "next/cache"
 
-export const getUserBalance = async (id: string): Promise<Balance> => {
+export const getUserBalance = async (): Promise<Balance> => {
   try {
-    const res = await fetch(`${process.env.BASE_API}/users/${id}/balance`)
-    const data = (await res.json()) as Balance
+    const session = await auth()
+    const userId = session?.user?.id
+    if (!userId) {
+      redirect("/")
+    }
+
+    const { balance, earnings, expenses, investments } =
+      await getUserBalanceService(userId)
     return {
-      earnings: Number(data.earnings || 0),
-      balance: Number(data.balance || 0),
-      expenses: Number(data.expenses || 0),
-      investments: Number(data.investments || 0),
+      earnings: earnings.toNumber(),
+      balance: balance.toNumber(),
+      expenses: expenses.toNumber(),
+      investments: investments.toNumber(),
     }
   } catch (error) {
     throw new Error("Erro ao carregar dados")
   }
+}
+
+export const updateUser = async (data: UpdateUserData) => {
+  try {
+    const session = await auth()
+    const userId = session?.user?.id
+    if (!userId) {
+      redirect("/")
+    }
+
+    await updateUserService(userId, data)
+  } catch (error) {
+    return { message: "Erro ao alterar dados" }
+  }
+
+  revalidatePath("/dashboard")
 }

@@ -1,5 +1,7 @@
 "use client"
 
+import { TransactionType } from "@prisma/client"
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,12 +25,12 @@ dayjs.locale("pt-br")
 
 // Utilities
 import { Colors } from "@/data/enum"
-import { Transaction } from "../../types"
+import { TransactionData } from "../../types"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 interface ChartBarProps {
-  transactionData: Transaction[]
+  transactionData: TransactionData[]
 }
 
 export const ChartBar = ({ transactionData }: ChartBarProps) => {
@@ -42,9 +44,9 @@ export const ChartBar = ({ transactionData }: ChartBarProps) => {
       {
         data: transactionData.slice(0, 10).map((t) => t.amount),
         backgroundColor: transactionData.map((t) => {
-          if (t.type === "EXPENSE") return Colors.RED
-          if (t.type === "EARNING") return Colors.GREEN
-          if (t.type === "INVESTMENT") return Colors.BLUE
+          if (t.type === TransactionType.EARNING) return Colors.GREEN
+          if (t.type === TransactionType.EXPENSE) return Colors.RED
+          if (t.type === TransactionType.INVESTMENT) return Colors.BLUE
         }),
         borderRadius: 8,
         borderSkipped: false,
