@@ -13,6 +13,8 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: "FinTrack",
+  description:
+    "Bem-vindo ao Fintrack! Simplifique sua gestão financeira e tome decisões inteligentes. Adicione suas transações e visualize sua situação financeira com gráficos intuitivos.",
 }
 
 export default function RootLayout({
@@ -21,10 +23,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="pt-br" suppressHydrationWarning className="dark">
+      <head>
+        <link
+          rel="icon"
+          href="/fintrack-logo.svg"
+          type="image/svg"
+          sizes="any"
+        />
+      </head>
       <body
         className={cn(
-          "bg-background min-h-screen font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
         )}
       >

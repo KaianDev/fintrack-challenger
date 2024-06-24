@@ -64,6 +64,7 @@ Bem-vindo ao Fintrack! Simplifique sua gestão financeira e tome decisões intel
 ```
 
 **10. Execute o comando prisma db push**
+
 Esse comando irá criar o banco de dados e as tabelas necessárias para a aplicação funcionar.
 
 ```bash

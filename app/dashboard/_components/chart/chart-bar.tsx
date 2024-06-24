@@ -44,8 +44,8 @@ export const ChartBar = ({ transactionData }: ChartBarProps) => {
       {
         data: transactionData.slice(0, 10).map((t) => t.amount),
         backgroundColor: transactionData.map((t) => {
-          if (t.type === TransactionType.EARNING) return Colors.RED
-          if (t.type === TransactionType.EXPENSE) return Colors.GREEN
+          if (t.type === TransactionType.EARNING) return Colors.GREEN
+          if (t.type === TransactionType.EXPENSE) return Colors.RED
           if (t.type === TransactionType.INVESTMENT) return Colors.BLUE
         }),
         borderRadius: 8,

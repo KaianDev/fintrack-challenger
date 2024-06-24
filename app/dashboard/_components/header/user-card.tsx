@@ -40,7 +40,7 @@ export const UserCard = ({ data }: UserCardProps) => {
             </AvatarFallback>
             <AvatarImage src="/avatar.png" sizes="20" />
           </Avatar>
-          <p className="hidden text-white md:block">{`${first_name} ${last_name}`}</p>
+          <p className="hidden capitalize text-white md:block">{`${first_name} ${last_name}`}</p>
         </div>
       </DropdownMenuTrigger>
 
