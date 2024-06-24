@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 // Utilities
-import { AuthFormData, authSchema } from "../../schemas"
+import { AuthFormData, authSchema } from "@/schemas/user"
 import { login } from "../../_actions/auth"
 import { useRouter } from "next/navigation"
 

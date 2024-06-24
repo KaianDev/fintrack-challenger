@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 // Utilities
-import { CreateUserFormData, createUserSchema } from "../../schemas"
+import { CreateUserFormData, createUserSchema } from "@/schemas/user"
 import { signUp } from "../../_actions/auth"
 
 export const SignUpForm = () => {
@@ -33,7 +33,6 @@ export const SignUpForm = () => {
     startTransaction(async () => {
       const res = await signUp(data)
       if (res?.message) {
-        
       } else {
         router.replace("/")
       }
