@@ -1,6 +1,11 @@
+import { auth } from "@/lib/auth"
 import { Header } from "./_components/header"
+import { redirect } from "next/navigation"
 
-const Layout = ({ children }: React.PropsWithChildren) => {
+const Layout = async ({ children }: React.PropsWithChildren) => {
+  const session = await auth()
+  if (!session?.user) redirect("/")
+
   return (
     <>
       <Header />

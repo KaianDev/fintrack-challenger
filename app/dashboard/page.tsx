@@ -18,9 +18,8 @@ import { getTransactions } from "./_actions/transactions"
 import { getUserBalance } from "./_actions/user"
 
 const Dashboard = async () => {
-  const id = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
   const transactionData = await getTransactions()
-  const balance = await getUserBalance(id)
+  const balance = await getUserBalance()
 
   return (
     <main className="flex flex-col gap-6">

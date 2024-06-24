@@ -9,9 +9,16 @@ import {
   updateTransaction as updateTransactionService,
   deleteTransaction as deleteTransactionService,
 } from "@/services/transaction"
+import { auth } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export const getTransactions = async () => {
-  const userId = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
+  const session = await auth()
+  const userId = session?.user?.id
+  if (!userId) {
+    redirect("/")
+  }
+
   try {
     const transactions = await findTransactionByUserId(userId)
     return transactions.map((t) => {
@@ -27,7 +34,12 @@ export const getTransactions = async () => {
 
 export const createTransaction = async (data: TransactionFormData) => {
   try {
-    const userId = "fab4537e-fd5a-4bca-be99-ffe64eb74ee5"
+    const session = await auth()
+    const userId = session?.user?.id
+
+    if (!userId) {
+      redirect("/")
+    }
     const createData = { ...data, userId }
     await createTransactionService(createData)
 
@@ -49,6 +61,5 @@ export const updateTransaction = async (
 
 export const deleteTransaction = async (id: string) => {
   await deleteTransactionService(id)
-
   revalidatePath("/dashboard")
 }
