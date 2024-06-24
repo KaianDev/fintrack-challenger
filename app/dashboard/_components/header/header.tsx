@@ -3,7 +3,7 @@ import Link from "next/link"
 
 // Components
 import { NavLink } from "."
-import { UserCard } from "."
+import { UserCard } from "../user"
 import { getCurrentUser } from "@/app/(public)/_actions/auth"
 
 export const Header = async () => {

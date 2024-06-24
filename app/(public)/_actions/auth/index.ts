@@ -2,7 +2,6 @@
 
 import { auth, signIn } from "@/lib/auth"
 
-import { AuthFormData } from "../../schemas"
 import { CredentialsSignin } from "next-auth"
 import {
   CreateUserData,
@@ -11,6 +10,8 @@ import {
   findUserByIdWithOutPassword,
 } from "@/services/user"
 import bcryptjs from "bcryptjs"
+
+import { AuthFormData } from "@/schemas/user"
 
 export const login = async (data: AuthFormData) => {
   try {
