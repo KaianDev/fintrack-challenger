@@ -35,20 +35,23 @@ Bem-vindo ao Fintrack! Simplifique sua gestão financeira e tome decisões intel
   cd fintrack-challenger
 ```
 
-**4. Configure o banco de dados (Postgresql)**
+**4. Configure o banco de dados (PostgreSQL)**
 
 **5. Renomeie o arquivo .env.example para .env**
 
-**6. Defina a variável de AUTH_SECRET rodando o comando abaixo**
+**6. Definir a Variável AUTH_SECRET**
+
+Execute o comando abaixo para gerar um secret:
 
 ```bash
   npx auth secret
 ```
 
-**7. Defina as váriaveis de ambiente no arquivo .env**
+**7. Definir as Variáveis de Ambiente no Arquivo .env**
 
 - DATABASE_URL="postgres://username:password@host:port/mydb"
 - AUTH_SECRET="secret de autenticação"
+- AUTH_TRUST_HOST=true
 
 - Copie o resultado gerado e no arquivo .env defina o valor para a variável de ambiente AUTH_SECRET
 
@@ -58,20 +61,21 @@ Bem-vindo ao Fintrack! Simplifique sua gestão financeira e tome decisões intel
   pnpm i
 ```
 
-**9. Suba o container do banco de dados**
+**9. Suba o Container do Banco de Dados**
+
 ```bash
   docker compose up -d
 ```
 
 **10. Execute o comando prisma db push**
 
-Esse comando irá criar o banco de dados e as tabelas necessárias para a aplicação funcionar.
+Execute o comando abaixo para criar o banco de dados e as tabelas:
 
 ```bash
   npx prisma db push
 ```
 
-**11. Inicie a aplicação em ambiente de DEV**
+**11. Iniciar a Aplicação em Ambiente de Desenvolvimento**
 
 ```bash
   pnpm dev
@@ -79,7 +83,7 @@ Esse comando irá criar o banco de dados e as tabelas necessárias para a aplica
 
 ## Deploy
 
-Para fazer o deploy desse projeto rode
+Para fazer o deploy desse projeto, execute:
 
 ```bash
   pnpm build
@@ -92,7 +96,7 @@ Para fazer o deploy desse projeto rode
 - Gerência financeira
 - Análise de gráficos
 
-## Contribuidores
+## Contribuidor
 
 <table>
   <tr>
