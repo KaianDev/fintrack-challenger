@@ -1,6 +1,6 @@
 ![Logo](/public/fintrack-logo.svg)
 
-# FinTrack
+# FinTrack (Fetch API)
 
 Bem-vindo ao Fintrack! Simplifique sua gestão financeira e tome decisões inteligentes. Adicione suas transações e visualize sua situação financeira com gráficos intuitivos.
 
@@ -21,7 +21,6 @@ Bem-vindo ao Fintrack! Simplifique sua gestão financeira e tome decisões intel
 
 - [NodeJS](https://nodejs.org/en/download/package-manager)
 - [pnpm](https://pnpm.io/pt/installation)
-- [docker](https://docs.docker.com/get-docker/)
 
 **2. Clone o projeto**
 
@@ -35,11 +34,9 @@ Bem-vindo ao Fintrack! Simplifique sua gestão financeira e tome decisões intel
   cd fintrack-challenger
 ```
 
-**4. Configure o banco de dados (PostgreSQL)**
+**4. Renomeie o arquivo .env.example para .env**
 
-**5. Renomeie o arquivo .env.example para .env**
-
-**6. Definir a Variável AUTH_SECRET**
+**5. Definir a Variável AUTH_SECRET**
 
 Execute o comando abaixo para gerar um secret:
 
@@ -47,35 +44,21 @@ Execute o comando abaixo para gerar um secret:
   npx auth secret
 ```
 
-**7. Definir as Variáveis de Ambiente no Arquivo .env**
+**6. Definir as Variáveis de Ambiente no Arquivo .env**
 
-- DATABASE_URL="postgres://username:password@host:port/mydb"
 - AUTH_SECRET="secret de autenticação"
 - AUTH_TRUST_HOST=true
+- BASE_API="http://minhaapi.com/api"
 
-- Copie o resultado gerado e no arquivo .env defina o valor para a variável de ambiente AUTH_SECRET
+Copie o resultado gerado e no arquivo .env defina o valor para a variável de ambiente AUTH_SECRET
 
-**8. Instale as dependências**
+**7. Instale as dependências**
 
 ```bash
   pnpm i
 ```
 
-**9. Suba o Container do Banco de Dados**
-
-```bash
-  docker compose up -d
-```
-
-**10. Execute o comando prisma db push**
-
-Execute o comando abaixo para criar o banco de dados e as tabelas:
-
-```bash
-  npx prisma db push
-```
-
-**11. Iniciar a Aplicação em Ambiente de Desenvolvimento**
+**8. Iniciar a Aplicação em Ambiente de Desenvolvimento**
 
 ```bash
   pnpm dev
