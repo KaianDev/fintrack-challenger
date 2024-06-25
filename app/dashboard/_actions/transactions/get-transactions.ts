@@ -1,6 +1,8 @@
 "use server"
 
+import { redirect } from "next/navigation"
 import { TransactionData, TransactionType } from "../../types"
+import { auth } from "@/lib/auth"
 
 interface TransactionDataBackendResponse {
   id: string
@@ -12,12 +14,11 @@ interface TransactionDataBackendResponse {
 }
 
 export const getTransactions = async (): Promise<TransactionData[]> => {
-  // const session = await auth()
-  // const userId = session?.user?.id
-  // if (!userId) {
-  //   redirect("/")
-  // }
-  const userId = "2054d081-d5b6-404a-bea0-cc43ef777c98"
+  const session = await auth()
+  if (!session?.user) {
+    redirect("/")
+  }
+  const userId = session?.user?.id!
 
   try {
     const res = await fetch(

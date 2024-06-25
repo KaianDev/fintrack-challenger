@@ -5,9 +5,9 @@ import { redirect } from "next/navigation"
 import { PropsWithChildren } from "react"
 
 const Layout = async ({ children }: PropsWithChildren) => {
-  // const session = await auth()
+  const session = await auth()
 
-  // if (session?.user) redirect("/dashboard")
+  if (session?.user) redirect("/dashboard")
 
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">

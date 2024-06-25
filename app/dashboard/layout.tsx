@@ -3,8 +3,8 @@ import { Header } from "./_components/header"
 import { redirect } from "next/navigation"
 
 const Layout = async ({ children }: React.PropsWithChildren) => {
-  // const session = await auth()
-  // if (!session?.user) redirect("/")
+  const session = await auth()
+  if (!session?.user) redirect("/")
 
   return (
     <>

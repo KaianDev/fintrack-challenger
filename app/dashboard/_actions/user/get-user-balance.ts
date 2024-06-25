@@ -1,6 +1,8 @@
 "use server"
 
+import { redirect } from "next/navigation"
 import { Balance } from "../../types"
+import { auth } from "@/lib/auth"
 
 interface BalanceDataBackendResponse {
   expenses: string
@@ -11,12 +13,11 @@ interface BalanceDataBackendResponse {
 
 export const getUserBalance = async (): Promise<Balance> => {
   try {
-    // const session = await auth()
-    // const userId = session?.user?.id
-    // if (!userId) {
-    //   redirect("/")
-    // }
-    const userId = "2054d081-d5b6-404a-bea0-cc43ef777c98"
+    const session = await auth()
+    if (!session?.user) {
+      redirect("/")
+    }
+    const userId = session?.user?.id!
     const res = await fetch(`${process.env.BASE_API}/users/${userId}/balance`)
     if (!res.ok) {
       throw new Error("Erro ao carregar balanço")

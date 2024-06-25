@@ -2,16 +2,17 @@
 
 import { revalidatePath } from "next/cache"
 import { TransactionFormData } from "../../schemas"
+import { redirect } from "next/navigation"
+import { auth } from "@/lib/auth"
 
 export const createTransaction = async (data: TransactionFormData) => {
   try {
-    // const session = await auth()
-    // const userId = session?.user?.id
+    const session = await auth()
+    if (!session?.user) {
+      redirect("/")
+    }
+    const user_id = session?.user?.id!
 
-    // if (!userId) {
-    //   redirect("/")
-    // }
-    const user_id = "2054d081-d5b6-404a-bea0-cc43ef777c98"
     const createData = { ...data, user_id }
     const res = await fetch(`${process.env.BASE_API}/transactions`, {
       method: "POST",

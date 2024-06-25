@@ -1,11 +1,10 @@
-import NextAuth, { CredentialsSignin } from "next-auth"
+import NextAuth, { AuthError, CredentialsSignin } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { z } from "zod"
-import bcryptjs from "bcryptjs"
 
-import { findUserByEmail } from "@/services/user"
 import prisma from "./db"
+import { User } from "@/schemas/user"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -20,25 +19,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           .safeParse(credentials)
 
         if (!schema.success) return null
-
         const { email, password } = schema.data
 
-        const foundUser = await findUserByEmail(email)
-        if (!foundUser)
-          throw new CredentialsSignin("E-mail e/ou senha inválidos")
+        const res = await fetch(`${process.env.BASE_API}/users/auth`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        })
 
-        const matchPassword = await bcryptjs.compare(
-          password,
-          foundUser.password,
-        )
-
-        if (!matchPassword)
+        if (!res.ok) {
           throw new CredentialsSignin("E-mail e/ou senha inválidos")
+        }
+
+        const user = (await res.json()) as User
 
         return {
-          email: foundUser.email,
-          id: foundUser.id,
-          name: `${foundUser.first_name} ${foundUser.last_name}`,
+          email: user.email,
+          id: user.id,
+          name: `${user.first_name} ${user.last_name}`,
         }
       },
     }),

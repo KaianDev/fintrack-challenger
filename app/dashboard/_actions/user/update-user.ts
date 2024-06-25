@@ -1,11 +1,17 @@
 "use server"
 
+import { auth } from "@/lib/auth"
 import { UpdateUserFormData } from "@/schemas/user"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
 export const updateUser = async (data: UpdateUserFormData) => {
   try {
-    const userId = "2054d081-d5b6-404a-bea0-cc43ef777c98"
+    const session = await auth()
+    if (!session?.user) {
+      redirect("/")
+    }
+    const userId = session?.user?.id!
 
     const res = await fetch(`${process.env.BASE_API}/users/${userId}`)
 
