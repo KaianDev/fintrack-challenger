@@ -3,12 +3,6 @@
 import { revalidatePath } from "next/cache"
 import { TransactionFormData } from "../../schemas"
 
-import {
-  findTransactionByUserId,
-  createTransaction as createTransactionService,
-  updateTransaction as updateTransactionService,
-  deleteTransaction as deleteTransactionService,
-} from "@/services/transaction"
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import { TransactionData, TransactionType } from "../../types"
@@ -93,16 +87,50 @@ export const updateTransaction = async (
   data: TransactionFormData,
 ) => {
   try {
-    await updateTransactionService(transactionId, data)
+    const res = await fetch(
+      `${process.env.BASE_API}/transactions/${transactionId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
+    )
     revalidatePath("/dashboard")
+    if (!res.ok) {
+      throw new Error("Erro ao editar transação")
+    }
   } catch (error) {
+    if (error instanceof Error) {
+      return { message: error.message }
+    }
     return {
       message: "Ocorreu um erro durante a edição da transação",
     }
   }
 }
 
-export const deleteTransaction = async (id: string) => {
-  await deleteTransactionService(id)
-  revalidatePath("/dashboard")
+export const deleteTransaction = async (transactionId: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.BASE_API}/transactions/${transactionId}`,
+      {
+        method: "DELETE",
+      },
+    )
+
+    if (!res.ok) {
+      throw new Error("Erro ao excluir transação")
+    }
+
+    revalidatePath("/dashboard")
+  } catch (error) {
+    if (error instanceof Error) {
+      return { message: error.message }
+    }
+    return {
+      message: "Ocorreu um erro ao tentar excluir transação",
+    }
+  }
 }
