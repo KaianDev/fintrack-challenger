@@ -1,37 +1,50 @@
 "use client"
 
-import { PropsWithChildren, useState } from "react"
+import { PropsWithChildren } from "react"
+import { LucideIcon } from "lucide-react"
 
 // Components
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { UserUpdateForm } from "./user-update-form"
 
 interface UserDialogProps extends PropsWithChildren {
-  data: {
-    first_name: string
-    last_name: string
-  }
+  label: string
+  title: string
+  description: string
+  icon: LucideIcon
+  open: boolean
+  setOpen: (v: boolean) => void
 }
 
-export const UserDialog = ({ children, data }: UserDialogProps) => {
-  const [open, setOpen] = useState(false)
-
-  const handleClose = () => setOpen(false)
+export const UserDialog = ({
+  children,
+  icon,
+  label,
+  title,
+  description,
+  open,
+  setOpen,
+}: UserDialogProps) => {
+  const Icon = icon
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger className="flex">
+        <Icon className="mr-2 h-4 w-4" />
+        <span>{label}</span>
+      </DialogTrigger>
       <DialogContent className="max-w-[350px]">
         <DialogHeader>
-          <DialogTitle className="title">Meu Perfil</DialogTitle>
+          <DialogTitle className="title">{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <UserUpdateForm onClose={handleClose} data={data} />
+        {children}
       </DialogContent>
     </Dialog>
   )

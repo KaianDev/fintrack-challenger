@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, { CredentialsSignin } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { z } from "zod"
@@ -24,15 +24,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { email, password } = schema.data
 
         const foundUser = await findUserByEmail(email)
-
-        if (!foundUser) return null
+        if (!foundUser)
+          throw new CredentialsSignin("E-mail e/ou senha inválidos")
 
         const matchPassword = await bcryptjs.compare(
           password,
           foundUser.password,
         )
 
-        if (!matchPassword) return null
+        if (!matchPassword)
+          throw new CredentialsSignin("E-mail e/ou senha inválidos")
 
         return {
           email: foundUser.email,

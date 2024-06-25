@@ -1,7 +1,8 @@
 "use client"
 
-import { logout } from "@/actions"
+import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { LogOut, User, Lock } from "lucide-react"
 
 import {
   DropdownMenu,
@@ -12,8 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LogOut, User } from "lucide-react"
-import { UserDialog } from "."
+import { UserDialog, UserUpdateForm, UserUpdatePasswordForm } from "."
+
+// Utilities
+import { logout } from "@/actions"
 
 interface UserCardProps {
   data: {
@@ -25,6 +28,8 @@ interface UserCardProps {
 
 export const UserCard = ({ data }: UserCardProps) => {
   const { first_name, last_name } = data
+  const [openProfile, setOpenProfile] = useState(false)
+  const [openPassword, setOpenPassword] = useState(false)
 
   const handleLogout = async () => {
     await logout()
@@ -49,14 +54,35 @@ export const UserCard = ({ data }: UserCardProps) => {
         <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <UserDialog data={data}>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              <User className="mr-2 h-4 w-4" />
-              <span>Perfil</span>
-            </DropdownMenuItem>
-          </UserDialog>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <UserDialog
+              open={openProfile}
+              setOpen={setOpenProfile}
+              title="Meu Perfil"
+              description="Altere seus dados pessoais"
+              label="Perfil"
+              icon={User}
+            >
+              <UserUpdateForm
+                data={data}
+                onClose={() => setOpenProfile(false)}
+              />
+            </UserDialog>
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <UserDialog
+              open={openPassword}
+              setOpen={setOpenPassword}
+              title="Alterar senha"
+              description="Defina uma nova senha"
+              label="Alterar senha"
+              icon={Lock}
+            >
+              <UserUpdatePasswordForm onClose={() => setOpenPassword(false)} />
+            </UserDialog>
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut className="mr-2 size-4" />
             <span>Sair</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>

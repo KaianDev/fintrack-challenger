@@ -2,7 +2,7 @@
 
 import { auth, signIn } from "@/lib/auth"
 
-import { CredentialsSignin } from "next-auth"
+import { AuthError } from "next-auth"
 import {
   CreateUserData,
   createUser,
@@ -21,10 +21,11 @@ export const login = async (data: AuthFormData) => {
       redirect: false,
     })
   } catch (error) {
-    if (error instanceof CredentialsSignin) {
-      return { message: "Erro ao fazer login" }
+    if (error instanceof AuthError) {
+      return { message: error.cause?.err?.message }
     }
-    return { message: "Ocorreu um erro" }
+
+    return { message: "Erro de servidor" }
   }
 }
 
