@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { TransactionType } from "@prisma/client"
+import { TransactionType } from "../../types"
 
 interface TransactionBadgeProps {
   type: TransactionType

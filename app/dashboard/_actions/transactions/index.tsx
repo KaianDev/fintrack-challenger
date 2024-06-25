@@ -11,42 +11,79 @@ import {
 } from "@/services/transaction"
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
+import { TransactionData, TransactionType } from "../../types"
 
-export const getTransactions = async () => {
-  const session = await auth()
-  const userId = session?.user?.id
-  if (!userId) {
-    redirect("/")
-  }
+interface TransactionDataBackendResponse {
+  id: string
+  user_id: string
+  name: string
+  date: Date
+  amount: string
+  type: TransactionType
+}
+
+export const getTransactions = async (): Promise<TransactionData[]> => {
+  // const session = await auth()
+  // const userId = session?.user?.id
+  // if (!userId) {
+  //   redirect("/")
+  // }
+  const userId = "2054d081-d5b6-404a-bea0-cc43ef777c98"
 
   try {
-    const transactions = await findTransactionByUserId(userId)
+    const res = await fetch(
+      `${process.env.BASE_API}/transactions?userId=${userId}`,
+    )
+    if (!res.ok) {
+      throw new Error("Erro ao carregar transações")
+    }
+    const transactions = (await res.json()) as TransactionDataBackendResponse[]
     return transactions.map((t) => {
       return {
         ...t,
-        amount: t.amount.toNumber(),
+        userId: t.user_id,
+        date: new Date(t.date),
+        amount: Number(t.amount),
       }
     })
   } catch (error) {
-    throw new Error("Erro ao carregar os dados")
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+    throw new Error("Ocorreu um erro de servidor")
   }
 }
 
 export const createTransaction = async (data: TransactionFormData) => {
   try {
-    const session = await auth()
-    const userId = session?.user?.id
+    // const session = await auth()
+    // const userId = session?.user?.id
 
-    if (!userId) {
-      redirect("/")
+    // if (!userId) {
+    //   redirect("/")
+    // }
+    const user_id = "2054d081-d5b6-404a-bea0-cc43ef777c98"
+    const createData = { ...data, user_id }
+    const res = await fetch(`${process.env.BASE_API}/transactions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(createData),
+    })
+
+    if (!res.ok) {
+      throw new Error("Erro ao criar transação")
     }
-    const createData = { ...data, userId }
-    await createTransactionService(createData)
+    // await createTransactionService(createData)
 
     revalidatePath("/dashboard")
   } catch (error) {
+    if (error instanceof Error) {
+      return { message: error.message }
+    }
     return {
-      message:"Ocorreu um erro durante a adição da nova transação"
+      message: "Ocorreu um erro de servidor",
     }
   }
 }
@@ -60,7 +97,7 @@ export const updateTransaction = async (
     revalidatePath("/dashboard")
   } catch (error) {
     return {
-      message:"Ocorreu um erro durante a edição da transação"
+      message: "Ocorreu um erro durante a edição da transação",
     }
   }
 }

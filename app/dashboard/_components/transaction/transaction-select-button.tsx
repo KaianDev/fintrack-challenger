@@ -7,11 +7,11 @@ import { FormLabel } from "@/components/ui/form"
 
 // Utilities
 import { Colors } from "@/data/enum"
-import { TransactionType } from "@prisma/client"
+import { TransactionType } from "../../types"
 
 interface TransactionSelectButtonProps {
   type: TransactionType
-  value: string
+  value: TransactionType
 }
 
 export const TransactionSelectButton = ({

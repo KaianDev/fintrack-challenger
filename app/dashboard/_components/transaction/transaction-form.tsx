@@ -31,7 +31,7 @@ import { DeleteTransactionAlertDialog, TransactionSelectButton } from "."
 // Utilities
 import { cn } from "@/lib/utils"
 import { type TransactionFormData, transactionFormSchema } from "../../schemas"
-import { TransactionType } from "@prisma/client"
+import { TransactionType } from "../../types"
 
 interface TransactionFormProps {
   data?: TransactionData

@@ -1,6 +1,6 @@
 "use client"
 
-import { TransactionType } from "@prisma/client"
+import { TransactionType } from "../../types"
 
 import {
   Chart as ChartJS,

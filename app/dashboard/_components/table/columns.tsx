@@ -19,7 +19,7 @@ import { TransactionBadge, TransactionSheet } from "../transaction"
 
 // Utilities
 import { formatMoney } from "@/helpers/format-money"
-import { TransactionType } from "@prisma/client"
+import { TransactionType } from "../../types"
 
 export const columns: ColumnDef<TransactionData>[] = [
   {

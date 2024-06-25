@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { TransactionType } from "@prisma/client"
+import { TransactionType } from "./types"
 
 export const transactionFormSchema = z.object({
   name: z
