@@ -13,22 +13,35 @@ import {
 } from "@/services/user"
 import { PasswordFormData } from "../../schemas"
 import { auth } from "@/lib/auth"
+import { User } from "@/schemas/user"
+
+interface BalanceDataBackendResponse {
+  expenses: string
+  earnings: string
+  balance: string
+  investments: string
+}
 
 export const getUserBalance = async (): Promise<Balance> => {
   try {
-    const session = await auth()
-    const userId = session?.user?.id
-    if (!userId) {
-      redirect("/")
+    // const session = await auth()
+    // const userId = session?.user?.id
+    // if (!userId) {
+    //   redirect("/")
+    // }
+    const userId = "2054d081-d5b6-404a-bea0-cc43ef777c98"
+    const res = await fetch(`${process.env.BASE_API}/users/${userId}/balance`)
+    if (!res.ok) {
+      throw new Error("Erro ao carregar balanço")
     }
-
     const { balance, earnings, expenses, investments } =
-      await getUserBalanceService(userId)
+      (await res.json()) as BalanceDataBackendResponse
+
     return {
-      earnings: earnings.toNumber(),
-      balance: balance.toNumber(),
-      expenses: expenses.toNumber(),
-      investments: investments.toNumber(),
+      balance: Number(balance),
+      expenses: Number(expenses),
+      earnings: Number(earnings),
+      investments: Number(investments),
     }
   } catch (error) {
     throw new Error("Erro ao carregar dados")
@@ -37,15 +50,24 @@ export const getUserBalance = async (): Promise<Balance> => {
 
 export const updateUser = async (data: UpdateUserData) => {
   try {
-    const session = await auth()
-    const userId = session?.user?.id
-    if (!userId) {
-      redirect("/")
-    }
+    const userId = "2054d081-d5b6-404a-bea0-cc43ef777c98"
 
-    await updateUserService(userId, data)
+    const res = await fetch(`${process.env.BASE_API}/users/${userId}`)
+
+    if (!res.ok) throw new Error("Usuário não encontrado")
+
+    await fetch(`${process.env.BASE_API}/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
   } catch (error) {
-    return { message: "Erro ao alterar dados" }
+    if (error instanceof Error) {
+      return { message: error.message }
+    }
+    return { message: "Ocorreu um erro ao tentar alterar os dados" }
   }
 
   revalidatePath("/dashboard")
@@ -53,26 +75,25 @@ export const updateUser = async (data: UpdateUserData) => {
 
 export const updatePassword = async (data: PasswordFormData) => {
   try {
-    const session = await auth()
-    const userId = session?.user?.id
-    if (!userId) {
-      redirect("/")
-    }
+    // const session = await auth()
+    // const userId = session?.user?.id
+    // if (!userId) {
+    //   redirect("/")
+    // }
+    const userId = "2054d081-d5b6-404a-bea0-cc43ef777c98"
 
-    const foundUser = await findUserById(userId)
+    const res = await fetch(`${process.env.BASE_API}/users/${userId}`)
 
-    if (!foundUser) throw new Error("Usuário não encontrado")
+    if (!res.ok) throw new Error("Usuário não encontrado")
 
-    const matchPassword = await bcryptjs.compare(
-      data.password,
-      foundUser.password,
-    )
-
-    if (!matchPassword) throw new Error("A senha informada está incorreta")
-
-    const hashPassword = await bcryptjs.hash(data.newPassword, 10)
-    await updateUserService(userId, {
-      password: hashPassword,
+    await fetch(`${process.env.BASE_API}/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: data.newPassword,
+      }),
     })
   } catch (error) {
     if (error instanceof Error) {
