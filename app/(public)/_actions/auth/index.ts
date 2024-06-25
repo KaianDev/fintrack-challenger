@@ -1,17 +1,11 @@
 "use server"
 
-import { auth, signIn } from "@/lib/auth"
+import {  signIn } from "@/lib/auth"
 
 import { AuthError } from "next-auth"
-import {
-  CreateUserData,
-  createUser,
-  findUserByEmail,
-  findUserByIdWithOutPassword,
-} from "@/services/user"
 import bcryptjs from "bcryptjs"
 
-import { AuthFormData } from "@/schemas/user"
+import { AuthFormData, CreateUserFormData } from "@/schemas/user"
 
 export const login = async (data: AuthFormData) => {
   try {
@@ -29,20 +23,24 @@ export const login = async (data: AuthFormData) => {
   }
 }
 
-export const signUp = async (data: CreateUserData) => {
+export const signUp = async (data: CreateUserFormData) => {
   try {
-    const foundUser = await findUserByEmail(data.email)
-
-    if (foundUser) {
-      throw new Error("E-mail já utilizado")
-    }
-
     const hashPassword = await bcryptjs.hash(data.password, 10)
-
-    await createUser({
-      ...data,
-      password: hashPassword,
+    const res = await fetch(`${process.env.BASE_API}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+        password: hashPassword,
+      }),
     })
+
+    const user = await res.json()
+    if (user.message) {
+      throw new Error(user.message)
+    }
   } catch (error) {
     if (error instanceof Error) {
       return { message: error.message }
@@ -51,11 +49,3 @@ export const signUp = async (data: CreateUserData) => {
   }
 }
 
-export const getCurrentUser = async () => {
-  try {
-    const session = await auth()
-    return await findUserByIdWithOutPassword(session?.user?.id!)
-  } catch (error) {
-    throw new Error("Erro ao carregar dados do usuário")
-  }
-}
