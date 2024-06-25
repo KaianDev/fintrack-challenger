@@ -4,7 +4,7 @@ import Link from "next/link"
 // Components
 import { NavLink } from "."
 import { UserCard } from "../user"
-import { getCurrentUser } from "@/app/(public)/_actions/auth"
+import { getCurrentUser } from "@/actions"
 
 export const Header = async () => {
   const user = await getCurrentUser()
@@ -27,7 +27,7 @@ export const Header = async () => {
           <NavLink href="/dashboard" label="Dashboard" />
           <NavLink href="/analise" label="Análise" />
         </div>
-        <UserCard data={user!} />
+        <UserCard data={user} />
       </div>
     </header>
   )
