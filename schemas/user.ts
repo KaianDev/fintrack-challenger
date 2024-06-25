@@ -7,12 +7,14 @@ export const userSchema = z.object({
       required_error: "Campo obrigatório",
     })
     .min(1, "Campo obrigatório")
+    .max(10, "O número máximo de caracteres é 10")
     .trim(),
   last_name: z
     .string({
       required_error: "Campo obrigatório",
     })
     .min(1, "Campo obrigatório")
+    .max(10, "O número máximo de caracteres é 10")
     .trim(),
   email: z
     .string({

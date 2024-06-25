@@ -4,6 +4,7 @@ import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { Loader } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 // Components
 import {
@@ -14,9 +15,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { PasswordInput } from "@/components/ui/password-input"
 
 // Utilities
 import { CreateUserFormData, createUserSchema } from "@/schemas/user"
@@ -107,9 +108,8 @@ export const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input
+                  <PasswordInput
                     {...field}
-                    type="password"
                     autoComplete="off"
                     placeholder="Sua senha"
                     disabled={isPending}
