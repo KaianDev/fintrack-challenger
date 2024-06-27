@@ -26,6 +26,7 @@ dayjs.locale("pt-br")
 // Utilities
 import { Colors } from "@/data/enum"
 import { TransactionData } from "../../types"
+import { getTransactionsToChartBars } from "@/helpers"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -34,16 +35,15 @@ interface ChartBarProps {
 }
 
 export const ChartBar = ({ transactionData }: ChartBarProps) => {
-  const labels = transactionData
-    .slice(0, 10)
-    .map((t) => dayjs(t.date).utc().get("D"))
-
+  const transactions = getTransactionsToChartBars(transactionData)
+  
+  const labels = transactions.map((t) => t.label)
   const data = {
     labels,
     datasets: [
       {
-        data: transactionData.slice(0, 10).map((t) => t.amount),
-        backgroundColor: transactionData.map((t) => {
+        data: transactions.map((t) => t.amount),
+        backgroundColor: transactions.map((t) => {
           if (t.type === TransactionType.EARNING) return Colors.GREEN
           if (t.type === TransactionType.EXPENSE) return Colors.RED
           if (t.type === TransactionType.INVESTMENT) return Colors.BLUE

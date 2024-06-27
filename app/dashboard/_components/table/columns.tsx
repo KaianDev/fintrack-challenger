@@ -18,7 +18,7 @@ const tz = process.env.NEXT_PUBLIC_TIMEZONE || "America/Fortaleza"
 import { TransactionBadge, TransactionSheet } from "../transaction"
 
 // Utilities
-import { formatMoney } from "@/helpers/format-money"
+import { formatMoney } from "@/helpers"
 import { TransactionType } from "@prisma/client"
 
 export const columns: ColumnDef<TransactionData>[] = [

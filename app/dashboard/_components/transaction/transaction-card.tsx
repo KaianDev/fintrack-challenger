@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react"
 
 // Utilities
-import { formatMoney } from "@/helpers/format-money"
+import { formatMoney } from "@/helpers"
 
 // Components
 import { Card, CardContent } from "@/components/ui/card"
