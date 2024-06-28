@@ -11,7 +11,7 @@ import {
   UpdateUserData,
   findUserById,
 } from "@/services/user"
-import { PasswordFormData } from "../../schemas"
+import { PasswordFormData } from "../../_schemas"
 import { auth } from "@/lib/auth"
 
 export const getUserBalance = async (): Promise<Balance> => {

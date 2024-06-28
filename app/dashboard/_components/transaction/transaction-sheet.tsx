@@ -16,7 +16,7 @@ import {
 import { TransactionForm } from "."
 
 // Utilities
-import { TransactionFormData } from "../../schemas"
+import { TransactionFormData } from "../../_schemas"
 import { updateTransaction } from "../../_actions/transactions"
 import { toast } from "@/hooks"
 

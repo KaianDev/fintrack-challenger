@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { TransactionFormData } from "../../schemas"
+import { TransactionFormData } from "../../_schemas"
 
 import {
   findTransactionByUserId,

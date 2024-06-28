@@ -20,7 +20,7 @@ import { PasswordInput } from "@/components/ui/password-input"
 // Utilities
 import { toast } from "@/hooks"
 import { updatePassword } from "../../_actions/user"
-import { PasswordFormData, passwordSchema } from "../../schemas"
+import { PasswordFormData, passwordSchema } from "../../_schemas"
 
 interface UserUpdatePasswordFormPros {
   onClose: () => void
