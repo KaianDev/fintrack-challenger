@@ -35,7 +35,7 @@ export const UserDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex">
+      <DialogTrigger className="flex h-full w-full p-1">
         <Icon className="mr-2 h-4 w-4" />
         <span>{label}</span>
       </DialogTrigger>

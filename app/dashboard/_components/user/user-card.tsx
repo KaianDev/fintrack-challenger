@@ -52,9 +52,12 @@ export const UserCard = ({ data }: UserCardProps) => {
 
       <DropdownMenuContent align="end" className="bg-card">
         <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="border" />
         <DropdownMenuGroup>
-          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <DropdownMenuItem
+            className="p-0"
+            onSelect={(e) => e.preventDefault()}
+          >
             <UserDialog
               open={openProfile}
               setOpen={setOpenProfile}
@@ -69,7 +72,10 @@ export const UserCard = ({ data }: UserCardProps) => {
               />
             </UserDialog>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <DropdownMenuItem
+            className="p-0"
+            onSelect={(e) => e.preventDefault()}
+          >
             <UserDialog
               open={openPassword}
               setOpen={setOpenPassword}
@@ -81,7 +87,8 @@ export const UserCard = ({ data }: UserCardProps) => {
               <UserUpdatePasswordForm onClose={() => setOpenPassword(false)} />
             </UserDialog>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleLogout}>
+
+          <DropdownMenuItem className="p-1" onClick={handleLogout}>
             <LogOut className="mr-2 size-4" />
             <span>Sair</span>
           </DropdownMenuItem>
