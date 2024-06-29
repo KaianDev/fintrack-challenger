@@ -22,6 +22,7 @@ export const PasswordInput = ({
       <Input
         type={showPassword ? "text" : "password"}
         className={cn("hide-password-toggle", className)}
+        disabled={disabled}
         {...props}
       />
       <Button
