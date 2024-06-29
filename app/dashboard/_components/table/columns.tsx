@@ -20,6 +20,8 @@ import { TransactionBadge, TransactionSheet } from "../transaction"
 // Utilities
 import { formatMoney } from "@/helpers"
 import { TransactionType } from "@prisma/client"
+import { Button } from "@/components/ui/button"
+import { ArrowUpDown } from "lucide-react"
 
 export const columns: ColumnDef<TransactionData>[] = [
   {
@@ -32,7 +34,18 @@ export const columns: ColumnDef<TransactionData>[] = [
   },
   {
     accessorKey: "type",
-    header: "Tipo",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="hover:bg-muted-foreground"
+        >
+          Tipo
+          <ArrowUpDown className="ml-2 size-4" />
+        </Button>
+      )
+    },
     cell({ row }) {
       const type = row.getValue("type") as TransactionType
       return <TransactionBadge type={type} />
@@ -40,7 +53,18 @@ export const columns: ColumnDef<TransactionData>[] = [
   },
   {
     accessorKey: "date",
-    header: "Data",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="hover:bg-muted-foreground"
+        >
+          Data
+          <ArrowUpDown className="ml-2 size-4" />
+        </Button>
+      )
+    },
     cell({ row }) {
       const date = row.getValue("date") as string
       const daysLocal = dayjs(new Date(date))
@@ -51,7 +75,18 @@ export const columns: ColumnDef<TransactionData>[] = [
   },
   {
     accessorKey: "amount",
-    header: "Valor",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="hover:bg-muted-foreground"
+        >
+          Valor
+          <ArrowUpDown className="ml-2 size-4" />
+        </Button>
+      )
+    },
     cell({ row }) {
       const amount = row.getValue("amount") as number
       const formattedAmount = formatMoney(amount)
