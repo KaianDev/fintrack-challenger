@@ -1,13 +1,21 @@
 import prisma from "@/lib/db"
 import { Prisma, TransactionType } from "@prisma/client"
 
-export const getUserBalance = async (id: string) => {
+export const getUserBalance = async (
+  id: string,
+  startDate: Date,
+  endDate: Date,
+) => {
   const {
     _sum: { amount: totalExpenses },
   } = await prisma.transaction.aggregate({
     where: {
       userId: id,
       type: TransactionType.EXPENSE,
+      date: {
+        gte: startDate,
+        lte: endDate,
+      },
     },
     _sum: {
       amount: true,
@@ -20,6 +28,10 @@ export const getUserBalance = async (id: string) => {
     where: {
       userId: id,
       type: TransactionType.EARNING,
+      date: {
+        gte: startDate,
+        lte: endDate,
+      },
     },
     _sum: {
       amount: true,
@@ -32,6 +44,10 @@ export const getUserBalance = async (id: string) => {
     where: {
       userId: id,
       type: TransactionType.INVESTMENT,
+      date: {
+        gte: startDate,
+        lte: endDate,
+      },
     },
     _sum: {
       amount: true,

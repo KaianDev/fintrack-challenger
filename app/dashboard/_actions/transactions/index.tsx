@@ -11,8 +11,17 @@ import {
 } from "@/services/transaction"
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
+import { getDate } from "@/helpers"
 
-export const getTransactions = async () => {
+interface GetTransactionsParams {
+  selectedMonth?: string
+  selectedYear?: string
+}
+
+export const getTransactions = async ({
+  selectedMonth,
+  selectedYear,
+}: GetTransactionsParams) => {
   const session = await auth()
   const userId = session?.user?.id
   if (!userId) {
@@ -20,7 +29,14 @@ export const getTransactions = async () => {
   }
 
   try {
-    const transactions = await findTransactionByUserId(userId)
+    const { startDate, endDate } = getDate({ selectedMonth, selectedYear })
+
+    const transactions = await findTransactionByUserId(
+      userId,
+      startDate,
+      endDate,
+    )
+
     return transactions.map((t) => {
       return {
         ...t,

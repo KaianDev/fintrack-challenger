@@ -16,33 +16,43 @@ import {
 // Utilities
 import { getTransactions } from "./_actions/transactions"
 import { getUserBalance } from "./_actions/user"
+import { TransactionSelectDate } from "./_components/transaction/transaction-select-date"
+import { Suspense } from "react"
 
-const Dashboard = async () => {
-  const transactionData = await getTransactions()
-  const balance = await getUserBalance()
+interface DashboardProps {
+  searchParams: {
+    selectedMonth?: string
+    selectedYear?: string
+  }
+}
+
+const Dashboard = async ({ searchParams }: DashboardProps) => {
+  const transactionData = await getTransactions({
+    selectedMonth: searchParams.selectedMonth,
+  })
+  const balance = await getUserBalance({
+    selectedMonth: searchParams.selectedMonth,
+  })
 
   return (
     <main className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <h1 className="title">Dashboard</h1>
         <div className="flex justify-between gap-2 sm:justify-end">
-          <Button
-            variant="outline"
-            className="flex items-center justify-center gap-2 hover:bg-card"
-          >
-            <Calendar size={16} />
-            <span className="capitalize">
-              {dayjs(new Date()).format("MMMM")}
-            </span>
-          </Button>
+          <Suspense>
+            <TransactionSelectDate />
+          </Suspense>
           <TransactionDialog />
         </div>
       </div>
 
-      <TransactionBalance />
+      <TransactionBalance
+        selectedMonth={searchParams.selectedMonth}
+        selectedYear={searchParams.selectedYear}
+      />
 
       <section className="flex flex-col-reverse gap-6 xl:flex-row">
-        <section className="flex-1 rounded-lg bg-card border">
+        <section className="flex-1 rounded-lg border bg-card">
           <DataTable data={transactionData} columns={columns} />
         </section>
 

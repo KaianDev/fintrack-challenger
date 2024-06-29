@@ -6,8 +6,19 @@ import { TransactionCard, TransactionTitle } from "."
 // Utilities
 import { getUserBalance } from "../../_actions/user"
 
-export const TransactionBalance = async () => {
-  const { balance, earnings, expenses, investments } = await getUserBalance()
+interface TransactionBalanceProps {
+  selectedMonth?: string
+  selectedYear?: string
+}
+
+export const TransactionBalance = async ({
+  selectedMonth,
+  selectedYear,
+}: TransactionBalanceProps) => {
+  const { balance, earnings, expenses, investments } = await getUserBalance({
+    selectedMonth,
+    selectedYear,
+  })
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

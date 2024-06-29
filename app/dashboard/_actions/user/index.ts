@@ -13,8 +13,17 @@ import {
 } from "@/services/user"
 import { PasswordFormData } from "../../_schemas"
 import { auth } from "@/lib/auth"
+import { getDate } from "@/helpers"
 
-export const getUserBalance = async (): Promise<Balance> => {
+interface GetTransactionsParams {
+  selectedMonth?: string
+  selectedYear?: string
+}
+
+export const getUserBalance = async ({
+  selectedMonth,
+  selectedYear,
+}: GetTransactionsParams): Promise<Balance> => {
   try {
     const session = await auth()
     const userId = session?.user?.id
@@ -22,8 +31,10 @@ export const getUserBalance = async (): Promise<Balance> => {
       redirect("/")
     }
 
+    const { startDate, endDate } = getDate({ selectedMonth, selectedYear })
+
     const { balance, earnings, expenses, investments } =
-      await getUserBalanceService(userId)
+      await getUserBalanceService(userId, startDate, endDate)
     return {
       earnings: earnings.toNumber(),
       balance: balance.toNumber(),
