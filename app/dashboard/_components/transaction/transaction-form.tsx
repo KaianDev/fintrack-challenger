@@ -57,6 +57,7 @@ export const TransactionForm = ({
       date: data?.date,
       name: data?.name,
       type: data?.type,
+      category: data?.category
     },
   })
 
@@ -104,6 +105,24 @@ export const TransactionForm = ({
                     type="number"
                     autoComplete="off"
                     placeholder="Digite o valor da transação"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Categoria</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="text"
+                    autoComplete="off"
+                    placeholder="Ex: Contas fixas"
                   />
                 </FormControl>
                 <FormMessage />

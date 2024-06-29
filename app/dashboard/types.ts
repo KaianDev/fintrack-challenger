@@ -7,11 +7,11 @@ export interface Balance {
 }
 
 export interface TransactionData {
-  amount: number
   id: string
+  amount: number
   userId: string
   name: string
   type: $Enums.TransactionType
   date: Date
+  category?: string
 }
-

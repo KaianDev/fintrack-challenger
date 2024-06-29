@@ -33,17 +33,34 @@ export const columns: ColumnDef<TransactionData>[] = [
     },
   },
   {
+    accessorKey: "category",
+    header: ({ column }) => {
+      return (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="hover:text-white w-max flex items-center"
+        >
+          Categoria
+          <ArrowUpDown className="ml-2 size-4" />
+        </button>
+      )
+    },
+    cell({ row }) {
+      const category = row.getValue("category") as string | undefined
+      return <span>{category}</span>
+    },
+  },
+  {
     accessorKey: "type",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="hover:bg-muted-foreground"
+          className="hover:text-white w-max flex items-center"
         >
           Tipo
           <ArrowUpDown className="ml-2 size-4" />
-        </Button>
+        </button>
       )
     },
     cell({ row }) {
@@ -55,14 +72,13 @@ export const columns: ColumnDef<TransactionData>[] = [
     accessorKey: "date",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="hover:bg-muted-foreground"
+          className="hover:text-white w-max flex items-center"
         >
           Data
           <ArrowUpDown className="ml-2 size-4" />
-        </Button>
+        </button>
       )
     },
     cell({ row }) {
@@ -77,14 +93,13 @@ export const columns: ColumnDef<TransactionData>[] = [
     accessorKey: "amount",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="hover:bg-muted-foreground"
+          className="hover:text-white w-max flex items-center"
         >
           Valor
           <ArrowUpDown className="ml-2 size-4" />
-        </Button>
+        </button>
       )
     },
     cell({ row }) {

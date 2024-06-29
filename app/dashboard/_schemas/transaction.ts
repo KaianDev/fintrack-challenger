@@ -13,6 +13,7 @@ export const transactionFormSchema = z.object({
     })
     .positive("O valor precisa ser maior que 0")
     .min(0.1, "O valor mínimo é 0.1"),
+  category: z.string().trim().optional(),
   date: z.date({
     required_error: "Campo obrigatório",
     invalid_type_error: "Campo obrigatório",

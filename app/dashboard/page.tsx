@@ -42,7 +42,7 @@ const Dashboard = async () => {
       <TransactionBalance />
 
       <section className="flex flex-col-reverse gap-6 xl:flex-row">
-        <section className="flex-1 rounded-lg bg-card">
+        <section className="flex-1 rounded-lg bg-card border">
           <DataTable data={transactionData} columns={columns} />
         </section>
 

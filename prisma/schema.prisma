@@ -32,14 +32,14 @@ enum TransactionType {
 }
 
 model Transaction {
-  id     String          @id @default(uuid())
-  userId String
-  name   String
-  amount Decimal         @db.Decimal(10, 2)
-  type   TransactionType
-  date   DateTime
-
-  user User @relation(fields: [userId], references: [id])
+  id       String          @id @default(uuid())
+  userId   String
+  name     String
+  amount   Decimal         @db.Decimal(10, 2)
+  type     TransactionType
+  date     DateTime
+  category String?
+  user     User            @relation(fields: [userId], references: [id])
 
   @@map("transactions")
 }

@@ -52,14 +52,24 @@ export const DataTable = <TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md">
       <p className="title p-6">Transações</p>
-      <div className="px-2 pb-3">
+      <div className="grid md:grid-cols-2 gap-3 px-2 pb-3">
         <Input
-          placeholder="Filtre pelo título"
+          placeholder="Filtro por título"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="w-full"
+        />
+        <Input
+          placeholder="Filtro por categoria"
+          value={
+            (table.getColumn("category")?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table.getColumn("category")?.setFilterValue(event.target.value)
           }
           className="w-full"
         />
@@ -106,7 +116,7 @@ export const DataTable = <TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-end space-x-2 py-4 px-2">
+      <div className="flex items-center justify-end space-x-2 px-2 py-4">
         <Button
           variant="outline"
           size="sm"

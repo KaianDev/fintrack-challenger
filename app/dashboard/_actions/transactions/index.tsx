@@ -25,6 +25,7 @@ export const getTransactions = async () => {
       return {
         ...t,
         amount: t.amount.toNumber(),
+        category: t.category ?? undefined,
       }
     })
   } catch (error) {
@@ -46,7 +47,7 @@ export const createTransaction = async (data: TransactionFormData) => {
     revalidatePath("/dashboard")
   } catch (error) {
     return {
-      message:"Ocorreu um erro durante a adição da nova transação"
+      message: "Ocorreu um erro durante a adição da nova transação",
     }
   }
 }
@@ -60,7 +61,7 @@ export const updateTransaction = async (
     revalidatePath("/dashboard")
   } catch (error) {
     return {
-      message:"Ocorreu um erro durante a edição da transação"
+      message: "Ocorreu um erro durante a edição da transação",
     }
   }
 }

@@ -25,7 +25,7 @@ export const Header = async () => {
             <strong className="title hidden md:block">FinTrack</strong>
           </Link>
           <NavLink href="/dashboard" label="Dashboard" />
-          <NavLink href="/analise" label="Análise" />
+          <NavLink href="#" label="Análise" />
         </div>
         <UserCard data={user!} />
       </div>
