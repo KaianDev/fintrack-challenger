@@ -4,6 +4,7 @@ import { useTransition } from "react"
 import { CalendarIcon, Loader } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ptBR } from "date-fns/locale"
 import dayjs from "dayjs"
 
 import type { TransactionData } from "../../types"
@@ -57,7 +58,7 @@ export const TransactionForm = ({
       date: data?.date,
       name: data?.name,
       type: data?.type,
-      category: data?.category
+      category: data?.category,
     },
   })
 
@@ -156,6 +157,7 @@ export const TransactionForm = ({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
+                      locale={ptBR}
                       mode="single"
                       selected={new Date(field.value)}
                       onSelect={field.onChange}
