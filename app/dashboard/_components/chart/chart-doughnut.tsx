@@ -1,6 +1,5 @@
 "use client"
 
-import { transactionData } from "@/data/transaction"
 import {
   Chart as ChartJS,
   ArcElement,
@@ -19,6 +18,7 @@ import { TransactionTitle } from "../transaction/transaction-title"
 // Utilities
 import { Colors } from "@/data/enum"
 import { Balance } from "../../types"
+import { formatMoney } from "@/helpers"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -48,7 +48,16 @@ export const ChartDoughnut = ({ balanceData }: ChartDoughnutProps) => {
       legend: {
         display: false,
       },
+      tooltip: {
+        callbacks: {
+          label: ({ dataIndex, dataset }) => {
+            const label = dataset.data[dataIndex] || 0
+            return formatMoney(label as number)
+          },
+        },
+      },
     },
+
     cutout: 65,
   } as ChartOptions<"doughnut">
 

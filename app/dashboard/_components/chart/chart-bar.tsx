@@ -26,7 +26,7 @@ dayjs.locale("pt-br")
 // Utilities
 import { Colors } from "@/data/enum"
 import { TransactionData } from "../../types"
-import { getTransactionsToChartBars } from "@/helpers"
+import { formatMoney, getTransactionsToChartBars } from "@/helpers"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -36,7 +36,7 @@ interface ChartBarProps {
 
 export const ChartBar = ({ transactionData }: ChartBarProps) => {
   const transactions = getTransactionsToChartBars(transactionData)
-  
+
   const labels = transactions.map((t) => t.label)
   const data = {
     labels,
@@ -58,6 +58,14 @@ export const ChartBar = ({ transactionData }: ChartBarProps) => {
     plugins: {
       legend: {
         display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: ({ dataIndex, dataset }) => {
+            const label = dataset.data[dataIndex] || 0
+            return formatMoney(label as number)
+          },
+        },
       },
     },
     scales: {
